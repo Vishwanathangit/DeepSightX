@@ -1,0 +1,4174 @@
+# Code Repository Snapshot: React-DeepSightX-main
+
+--------------------------------------------
+Generated with reposnap v1.3.0
+Project: https://github.com/akhshyganesh/reposnap#readme
+Author: akhshyganesh
+Generated on: 17/5/2025 at 8:42:05 pm
+--------------------------------------------
+
+
+📄 README.md
+  ---
+  # React + Vite
+  
+  This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  
+  Currently, two official plugins are available:
+  
+  - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+  - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  
+  ## Expanding the ESLint configuration
+  
+  If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+  
+  ---
+
+📁 React-DeepSightX-main/
+  📄 README.md
+    ---
+    # React + Vite
+    
+    This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+    
+    Currently, two official plugins are available:
+    
+    - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+    - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    
+    ## Expanding the ESLint configuration
+    
+    If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+    
+    ---
+
+  📄 eslint.config.js
+    ---
+    import js from '@eslint/js'
+    import globals from 'globals'
+    import reactHooks from 'eslint-plugin-react-hooks'
+    import reactRefresh from 'eslint-plugin-react-refresh'
+    
+    export default [
+      { ignores: ['dist'] },
+      {
+        files: ['**/*.{js,jsx}'],
+        languageOptions: {
+          ecmaVersion: 2020,
+          globals: globals.browser,
+          parserOptions: {
+            ecmaVersion: 'latest',
+            ecmaFeatures: { jsx: true },
+            sourceType: 'module',
+          },
+        },
+        plugins: {
+          'react-hooks': reactHooks,
+          'react-refresh': reactRefresh,
+        },
+        rules: {
+          ...js.configs.recommended.rules,
+          ...reactHooks.configs.recommended.rules,
+          'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+          'react-refresh/only-export-components': [
+            'warn',
+            { allowConstantExport: true },
+          ],
+        },
+      },
+    ]
+    
+    ---
+
+  📄 index.html
+    ---
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      
+        <title>DeepSightX - AI Eye Disease Detection</title>
+      
+        <!-- Primary Meta Tags -->
+        <meta name="title" content="DeepSightX - AI Eye Disease Detection">
+        <meta name="description" content="DeepSightX is a smart AI-powered diagnostic platform that detects retinal and neurological diseases using facial and eye images.">
+      
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="/logo.png" />
+      
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://deepsightx.netlify.app/">
+        <meta property="og:title" content="DeepSightX - AI Eye Disease Detection">
+        <meta property="og:description" content="Upload or scan live using webcam to detect Cataracts, Glaucoma, and more. Download detailed diagnostic reports instantly.">
+        <meta property="og:image" content="https://deepsightx.netlify.app/logo.png">
+      
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://deepsightx.netlify.app/">
+        <meta property="twitter:title" content="DeepSightX - AI Eye Disease Detection">
+        <meta property="twitter:description" content="Smart AI-powered platform for retinal and neurological disease prediction. Upload image or use live webcam detection.">
+        <meta property="twitter:image" content="https://deepsightx.netlify.app/logo.png">
+      </head>
+      <body class="bg-gray-200">
+        <div id="root"></div>
+        <script type="module" src="/src/main.jsx"></script>
+      </body>
+    </html>
+    
+    ---
+
+  📁 public/
+    📄 _redirects
+      [Binary file]
+
+  📁 src/
+    📄 App.jsx
+      ---
+      import React from 'react'
+      import { Route, Routes } from 'react-router-dom'
+      import Home from './pages/Home'
+      import Navbar from './components/Navbar'
+      import Error_500 from './error_pages/Error_500'
+      import Error_404 from './error_pages/Error_404'
+      import Diseases from './pages/Diseases'
+      import Hospitals from './pages/Hospitals'
+      import About from './pages/About'
+      import Footer from './components/Footer'
+      import Doctors from './pages/Doctors'
+      import useScrollToTop from './hooks/useScrollToTop'
+      
+      const App = () => {
+      
+        //Hook to scroll to top on route change
+        useScrollToTop()
+      
+        return (
+          <main className='max-w-7xl px-4 lg:px-0 mx-auto'>
+            <Navbar />
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/diseases' element={<Diseases />} />
+              <Route path='/hospitals/:pageNumber' element={<Hospitals />} />
+              <Route path='/doctors/:hospitalname' element={<Doctors />} />
+              <Route path='/about' element={<About />} />
+      
+              <Route path='/500' element={<Error_500 />} />
+              <Route path='*' element={<Error_404 />} />
+            </Routes>
+            <Footer />
+          </main>
+        )
+      }
+      
+      export default App
+      ---
+
+    📁 assets/
+      📁 doctor_image/
+      📁 hospital_logo/
+    📁 components/
+      📄 AffectedCount.jsx
+        ---
+        import React from 'react'
+        import { diseaseCount } from '../utils/data'
+        import CountUp from 'react-countup'
+        import { useInView } from 'react-intersection-observer'
+        
+        const AffectedCount = () => {
+        
+            const { ref, inView } = useInView({ triggerOnce: false })
+        
+          return (
+            <section ref={ref} className='my-10 mt-16 sm:mt-20'>
+                {/* Title */}
+                <div className='space-y-2'>
+                    <h1 className='text-4xl font-bold font-serif'>India's Eye & Neurological Disease Burden</h1>
+                    <p className='text-justify sm:pl-[50px] text-[22px] text-gray-800'>Millions of people in India suffer from vision-related conditions and neurological disorders. Early detection and treatment can help prevent severe complications and improve quality of life. Here are the estimated affected numbers,</p>
+                </div>
+        
+                {/* Count */}
+                <div className='grid lg:grid-cols-6 place-items-center sm:grid-cols-3 grid-cols-2 mt-7 px-5 flex-wrap gap-y-7 sm:gap-y-8 gap-x-16'>
+                    {diseaseCount.map((element) =>(
+                        <div key={element.id} className='flex flex-col lg:gap-y-1 items-center'>
+                            <div className='flex text-primary text-[40px] sm:text-5xl lg:text-6xl font-bold items-center'>
+                                {inView && <CountUp start={0} end={element.count} delay={0} duration={5} />}
+                                <p>{element.system}</p>
+                                <span className='pl-0.5'>+</span>
+                            </div>
+                            <h1 className='sm:text-xl mt-[-7px] sm:mt-0 font-bold'>{element.name}</h1>
+                        </div>
+                    ))}
+                </div>
+            </section>
+          )
+        }
+        
+        export default AffectedCount
+        ---
+
+      📄 EachDoctor.jsx
+        ---
+        import React from 'react'
+        
+        const EachDoctor = ({ element }) => {
+          return (
+            <div className='flex w-[300px] sm:w-[250px] p-4 relative flex-col gap-y-5 rounded-lg border border-slate-400'>
+                <div className='flex items-center justify-center flex-1'>
+                    <img src={element.doctor_image} alt="DoctorImage" />
+                </div>
+                <div>
+                    <h1 className='font-bold text-lg'>{element.doctor_name}</h1>
+                    <p className='font-medium text-gray-500'>{element.doctor_speciality}</p>
+                </div>
+            </div>
+          )
+        }
+        
+        export default EachDoctor
+        ---
+
+      📄 EachHospital.jsx
+        ---
+        import React from 'react'
+        import { Phone, Link, ArrowRight } from 'lucide-react'
+        import { useNavigate } from 'react-router-dom'
+        
+        const EachHospital = ({ element }) => {
+        
+            const navigate = useNavigate()
+        
+          return (
+                <div className='flex relative flex-col sm:flex-row gap-x-7 rounded-lg shadow-xl bg-white'>
+                    <div className='flex items-center pl-3 pt-5 sm:pt-0 sm:w-[300px]'>
+                        <img className='w-full' src={element.hospital_logo} alt="HospitalLogo" />
+                    </div>
+                    
+                    <div className='p-6 flex-1 space-y-3'>
+                        <h1 className='sm:text-3xl flex-1 text-2xl font-serif mt-[-2px] font-bold pb-3 sm:pb-4'>{element.hospital_name}</h1>
+                        <div className='flex items-center ml-2 gap-x-2'>
+                            <Phone />
+                            <p className='font-medium'>{element.hospital_phoneno}</p>
+                        </div>
+                        <div className='flex items-center ml-2 gap-x-2'>
+                            <Link />
+                            <a href={element.hospital_link} target='__blank' className='font-medium underline cursor-pointer truncate text-blue-500'>{element.hospital_link}</a>
+                        </div>
+        
+                        <div className='flex mt-6 justify-end items-end'>
+                            <button onClick={() =>navigate(`/doctors/${element.hospital_name}`)} className='rounded px-4 py-2 font-medium text-lg bg-black text-white hover:bg-black/70 cursor-pointer flex items-center justify-center gap-x-2 duration-200'>Doctors <ArrowRight /></button>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+        
+        export default EachHospital
+        ---
+
+      📄 EyeResult.jsx
+        ---
+        import React from 'react'
+        import { diseaseDescription } from '../utils/data'
+        
+        const EyeResult = ({ eye, diagnosis, accuracy }) => {
+        
+          const barColor = Math.round(accuracy * 100) >= 70 ? '#22c55e' : Math.round(accuracy * 100) >= 40 ? '#facc15' : '#ef4444'
+          const desc = diseaseDescription.find((element) =>element.name == diagnosis)
+        
+          return (
+            <div className='border lg:w-[50%] shadow-xl bg-white border-slate-300 rounded-2xl p-7'>
+              <h1 className='uppercase text-center font-bold text-3xl font-mono'>{eye}</h1>
+              <h2 className='text-primary mt-1 text-center font-bold text-2xl'>Detected: {diagnosis.split("_").join(" ")}</h2>
+              <div className='space-y-2 my-4'>
+                <p className='text-lg font-medium'>Accuracy: <span className='text-primary pl-1'>{Math.round(accuracy * 100)}%</span></p>
+                <div className='w-full h-3.5 bg-slate-300 rounded-full relative'>
+                  <p style={{width: `${Math.round(accuracy * 100)}%`, backgroundColor: barColor}} className={`absolute left-0 rounded-full top-0 bottom-0`}></p>
+                </div>
+              </div>
+        
+              <div className='shadow-xl border border-slate-300 mt-5 p-6 rounded-xl shadow-slate-300'>
+                <h4 className='font-medium pb-1 text-lg'>Description:</h4>
+                <p className='indent-6 text-justify'>{desc?.description}</p>
+              </div>
+            </div>
+          )
+        }
+        
+        export default EyeResult
+        ---
+
+      📄 Footer.jsx
+        ---
+        import React from 'react'
+        import { Link } from 'react-router-dom'
+        
+        const Footer = () => {
+          return (
+            <footer className="text-black pt-5 mt-16 border-t border-gray-300">
+                <div className="flex flex-col md:flex-row items-start md:justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 md:space-y-0">
+                    
+                    {/* Logo */}
+                    <Link to={'/'} className="flex items-center ml-[-15px]">
+                        <img className="w-16 sm:w-20" src="/logo.png" alt="logo" />
+                        <h1 className="text-primary font-bold text-xl">DeepSightX</h1>
+                    </Link>
+        
+                    {/* Quick Links */}
+                    <div className="w-full md:w-auto">
+                        <h2 className="text-lg font-semibold">Quick Links</h2>
+                        <ul className="mt-2 space-y-2">
+                            <li><Link to={'/'} className="hover:text-primary">Home</Link></li>
+                            <li><Link to={"/diseases"} className="hover:text-primary">Diseases</Link></li>
+                            <li><Link to={"/hospitals/1"} className="hover:text-primary">Hospitals</Link></li>
+                            <li><Link to={"/about"} className="hover:text-primary">About</Link></li>
+                        </ul>
+                    </div>
+        
+                    {/* About Section */}
+                    <div className="w-full md:w-[330px]">
+                        <h2 className="text-lg font-semibold">About Us</h2>
+                        <p className="text-sm mt-2">Advancing eye care with AI-powered imaging to detect retinal and neurodegenerative diseases early.</p>
+                    </div>
+        
+                </div>
+        
+                <div className="mt-6 text-center text-sm py-4 border-t border-gray-300">
+                    © 2025 DeepSightX | All Rights Reserved
+                </div>
+            </footer>
+          
+        
+          )
+        }
+        
+        export default Footer
+        ---
+
+      📄 Hero.jsx
+        ---
+        import React from 'react'
+        import heroImg from '../assets/hero.png'
+        
+        const Hero = () => {
+          return (
+            <section className='flex gap-x-10 lg:flex-row gap-y-7 flex-col flex-between items-center justify-between mt-7 sm:mt-9 mb-10 md:mb-14'>
+                <div className='font-bold lg:w-[700px]'>
+                    <h3 className='text-primary text-lg sm:text-xl pb-4'>Welcome to the eye care destination</h3>
+                    <div className='sm:text-[44px] text-[32px] font-serif leading-12 sm:leading-16'>
+                        Early Detection of <span className='text-primary'>Retinal</span> and <span className='text-primary'>Neurodegenerative</span> Diseases Using AI-Powered Imaging
+                    </div>
+                </div>
+                <div>
+                    <img className='rounded-br-3xl w-[calc(100vw-10px)] lg:w-full rounded-tl-3xl' src={heroImg} alt="heroImg" />
+                </div>
+            </section>
+          )
+        }
+        
+        export default Hero
+        ---
+
+      📄 LiveCheck.jsx
+        ---
+        import React, { useRef, useEffect, useState } from "react"
+        import Webcam from "react-webcam"
+        import axios from "axios"
+        
+        const LiveCheck = () => {
+            const webcamRef = useRef(null)
+            const canvasRef = useRef(null)
+            const [loading, setLoading] = useState(false)
+        
+            async function sendFrameToRoboflow(imageSrc){
+                return new Promise((resolve, reject) =>{
+                    const img = new Image()
+                    img.src = imageSrc
+                    img.crossOrigin = "anonymous"
+        
+                    img.onload = async () =>{
+                        const tempCanvas = document.createElement("canvas")
+                        const ctx = tempCanvas.getContext("2d")
+                        tempCanvas.width = img.width
+                        tempCanvas.height = img.height
+        
+                        ctx.drawImage(img, 0, 0, img.width, img.height)
+                        const imageData = ctx.getImageData(0, 0, img.width, img.height)
+                        const data = imageData.data
+        
+                        // Convert RGB to BGR
+                        for (let i = 0; i < data.length; i += 4){
+                            const r = data[i]
+                            data[i] = data[i + 2]      // Red <- Blue
+                            data[i + 2] = r            // Blue <- Red
+                        }
+        
+                        ctx.putImageData(imageData, 0, 0)
+        
+                        tempCanvas.toBlob(async (blob) =>{
+                            const formData = new FormData()
+                            formData.append("file", blob)
+        
+                            try{
+                                const response = await axios.post(`${import.meta.env.VITE_ROBOFLOW_API_URL}?api_key=${import.meta.env.VITE_ROBOFLOW_API_KEY}`, formData)
+                                resolve(response.data)
+                            } 
+                            catch (err){
+                                console.error("Error sending to Roboflow:", err.message)
+                                reject(err)
+                            }
+                        }, "image/jpeg")
+                    }
+        
+                    img.onerror = (e) =>{
+                        reject("Failed to load image")
+                    }
+                })
+            }
+        
+            async function drawPredictions(predictions){
+                const ctx = canvasRef.current?.getContext("2d")
+                ctx?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+        
+                predictions?.forEach((prediction) =>{
+                    const { x, y, width, height, class: label, confidence } = prediction
+        
+                    ctx.strokeStyle = "green"
+                    ctx.lineWidth = 3
+                    ctx.strokeRect(x - width / 2, y - height / 2, width, height)
+        
+                    ctx.font = "18px Arial"
+                    ctx.fillStyle = "green"
+                    ctx.fillText(`${label} (${Math.round(confidence * 100)}%)`, x - width / 2, y - height / 2 - 10)
+                })
+            }
+        
+            useEffect(() =>{
+                const interval = setInterval(async () =>{
+                    if(webcamRef.current && webcamRef.current.getScreenshot && !loading){
+                        setLoading(true)
+                        const imageSrc = webcamRef.current.getScreenshot()
+                        if(imageSrc){
+                            try{
+                                const result = await sendFrameToRoboflow(imageSrc)
+                                drawPredictions(result?.predictions || [])
+                            } 
+                            catch (error){
+                                console.error("Detection error:", error.message)
+                            }
+                        }
+                        setLoading(false)
+                    }
+                }, 300) // Every second
+        
+                return () => clearInterval(interval)
+            }, [loading])
+        
+            return (
+                <section id="live-check" className="px-6 pt-5 pb-10 text-center">
+                    <h2 className="text-3xl font-bold mb-4">Live Eye Check 👁️</h2>
+                    <p className="text-gray-600 mb-6">Enable camera and let AI analyze your eyes live.</p>
+        
+                    <div className="flex justify-center">
+                        <div className="relative">
+                            <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" width={640} height={480} className="rounded shadow-lg"/>
+                            <canvas ref={canvasRef} width={640} height={480} className="absolute top-0 left-0 rounded" style={{ position: "absolute", top: 0, left: 0 }}/>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+        
+        export default LiveCheck;
+        
+        ---
+
+      📄 Navbar.jsx
+        ---
+        import { Menu, X } from 'lucide-react'
+        import React, { useState } from 'react'
+        import { Link, NavLink } from 'react-router-dom'
+        
+        const Navbar = () => {
+        
+          const [visible, setvisible] = useState(false)
+        
+          return (
+            <header className='flex ml-[-14px] lg:ml-0 items-center justify-between py-1'>
+                {/* Logo */}
+                <Link to={'/'} className='flex items-center'>
+                    <img className='sm:w-20 w-14' src="/logo.png" alt="logo" />
+                    <h1 className='sm:text-xl text-primary font-bold'>DeepSightX</h1>
+                </Link>
+        
+                {/* Navigation Links */}
+                <div className='lg:flex hidden items-center gap-x-14 text-gray-600 font-medium rounded-2xl uppercase px-7 py-2.5'>
+                    <NavLink to="/" className={(({isActive}) => isActive ? "border-b-2 py-1 text-primary" : `py-1`)}>Home</NavLink>
+                    <NavLink to="/diseases" className={(({isActive}) => isActive ? "border-b-2 py-1 text-primary" : `py-1`)}>Diseases</NavLink>
+                    <NavLink to="/hospitals/1" className={(({isActive}) => isActive ? "border-b-2 py-1 text-primary" : `py-1`)}>Hospitals</NavLink>
+                    <NavLink to="/about" className={(({isActive}) => isActive ? "border-b-2 py-1 text-primary" : `py-1`)}>About</NavLink>
+                </div>
+        
+                {/* Menu Icon */}
+                <Menu onClick={() =>setvisible(!visible)} className='lg:hidden text-gray-600 size-7 cursor-pointer' />
+        
+                {/* Sidebar Menu for Mobile */}
+                <nav className={`fixed z-50 lg:hidden sm:pl-10 sm:pr-5 transition-transform duration-300 ease-in-out left-0 top-0 bottom-0 w-[55%] sm:w-[50%] bg-white shadow-xl shadow-slate-700 ${visible ? "translate-x-0" : "-translate-x-full"}`}>
+                    <X onClick={() =>setvisible(!visible)} className='absolute right-4 cursor-pointer md:text-3xl top-10 text-gray-600 text-2xl ' />
+                    <div className='flex text-gray-600 flex-col items-end text-end gap-y-8 mt-24 md:pl-44 md:text-xl md:pr-16 px-10'>
+                        <NavLink onClick={() =>setvisible(!visible)} to='/' className={(({isActive}) => isActive ? "border-b-2 w-32 py-2 text-primary uppercase font-medium sm:text-lg" : `py-1 uppercase font-medium sm:text-lg`)}>Home</NavLink>
+                        <NavLink onClick={() =>setvisible(!visible)} to='/diseases' className={(({isActive}) => isActive ? "border-b-2 w-32 py-2 text-primary uppercase font-medium sm:text-lg" : `py-1 uppercase font-medium sm:text-lg`)}>Diseases</NavLink>
+                        <NavLink onClick={() =>setvisible(!visible)} to='/hospitals/1' className={(({isActive}) => isActive ? "border-b-2 w-32 py-2 text-primary uppercase font-medium sm:text-lg" : `py-1 uppercase font-medium sm:text-lg`)}>Hospitals</NavLink>
+                        <NavLink onClick={() =>setvisible(!visible)} to='/about' className={(({isActive}) => isActive ? "border-b-2 w-32 py-2 text-primary uppercase font-medium sm:text-lg" : `py-1 uppercase font-medium sm:text-lg`)}>About</NavLink>
+                    </div>
+                </nav>
+            </header>
+          )
+        }
+        
+        export default Navbar
+        ---
+
+      📄 Pagination.jsx
+        ---
+        import React from 'react'
+        import { useNavigate } from 'react-router-dom'
+        
+        const Pagination = ({ totalPosts, postsPerPage, pageNumber }) => {
+        
+            const navigate = useNavigate()
+            let pages = []
+            for(let i = 1; i <= Math.ceil(totalPosts/postsPerPage); i++){
+                pages.push(i)
+            }
+        
+            function handlePageChange(pageNumber){
+                navigate(`/hospitals/${pageNumber}`)
+                window.scrollTo({ top: 0, behavior: "smooth" })
+            }
+        
+            return (
+                <div className='flex justify-center flex-wrap items-center gap-4 mt-5'>
+                    {pages.map((element) =>(
+                        <button onClick={() =>handlePageChange(element)} key={element} className={`bg-[#F2F2F2] text-[#000000] cursor-pointer font-semibold px-4 py-2 rounded-md hover:bg-[#000000] hover:text-[#FFFFFF] ${element == pageNumber ? "bg-black text-white" : "bg-white text-black"}`}>{element}</button>
+                    ))}
+                </div>
+            )
+        }
+        
+        export default Pagination
+        ---
+
+      📄 UploadAndCheck.jsx
+        ---
+        import React, { useEffect, useState } from 'react'
+        import axios from 'axios'
+        import { useNavigate } from 'react-router-dom'
+        import uploadImg from '../assets/upload_area.png'
+        import { Download, Loader2, ScanEye } from 'lucide-react'
+        import EyeResult from './EyeResult'
+        import toast from 'react-hot-toast'
+        import { PDFDownloadLink } from '@react-pdf/renderer'
+        import Pdf from '../utils/Pdf'
+        
+        const UploadAndCheck = () => {
+        
+            const [image, setImage] = useState(null)
+            const [leftEye, setLeftEye] = useState(null)
+            const [rightEye, setRightEye] = useState(null)
+            const [singleEye, setSingleEye] = useState(null)
+            const [loading, setLoading] = useState(false)
+            const [eyeCount, setEyeCount] = useState("two_eyes")
+            
+            const navigate = useNavigate()
+          
+            async function fetchResult(){
+                if(!image){
+                    return toast.error("Please upload an image")
+                }
+                const formData = new FormData()
+                formData.append('file', image)
+                setLoading(true)
+                try{
+                    const response = await axios.post(`${import.meta.env.VITE_ROBOFLOW_API_URL}?api_key=${import.meta.env.VITE_ROBOFLOW_API_KEY}`, formData)
+            
+                    //Displaying error message if no predictions are found
+                    if(response.data.predictions.length === 0){
+                        return toast.error("Please upload a clear image")
+                    }
+            
+                    //For single eye prediction, finding the highest confidence prediction
+                    if(eyeCount === "single_eye"){
+                        setSingleEye(response.data.predictions.reduce((prev, curr) =>
+                            prev.confidence > curr.confidence ? prev : curr
+                        ))
+                        return;
+                    }
+            
+                    let tempLeftEye = []
+                    let tempRightEye = []
+                    let centrePoint = Math.floor(response.data.image.width / 2)
+            
+                    //Splitting predictions into left and right eye based on x coordinate
+                    for (let i = 0; i < response.data.predictions.length; i++) {
+                        if(response.data.predictions[i].x >= centrePoint){
+                            tempLeftEye.push(response.data.predictions[i])
+                        } 
+                        else{
+                            tempRightEye.push(response.data.predictions[i])
+                        }
+                    }
+            
+                    //Finding highest confidence prediction for left and right eye
+                    if(tempLeftEye.length > 0){
+                        setLeftEye(tempLeftEye.reduce((prev, curr) =>
+                            prev.confidence > curr.confidence ? prev : curr
+                        ))
+                    }
+                    if(tempRightEye.length > 0){
+                        setRightEye(tempRightEye.reduce((prev, curr) =>
+                            prev.confidence > curr.confidence ? prev : curr
+                        ))
+                    }
+                }
+                catch(err){
+                    navigate('/500')
+                    console.log(`Error in Fetch Result - ${err.message}`)
+                }
+                finally{
+                    setLoading(false)
+                }
+            }
+          
+            useEffect(() =>{
+              setLeftEye(null)
+              setRightEye(null)
+              setSingleEye(null)
+            }, [image, eyeCount])
+        
+          return (
+            <div>
+                <div className='mt-10 sm:mx-10 flex sm:items-stcart items-center flex-col'>
+                    <h1 className='font-bold uppercase text-3xl'>UPLOAD NOW 👇</h1>
+                    <label htmlFor="image" className='my-4 mx-7 w-[200px]'>
+                        <img src={image ? URL.createObjectURL(image) : uploadImg} alt="UploadImg" className=' rounded cursor-pointer' />
+                        <input onChange={(event) =>setImage(event.target.files[0])} type="file" name="image" className='hidden' accept='image/*' id="image" />
+                    </label>
+        
+                    <div className='flex items-center justify-center gap-x-5 my-2'>
+                        <div className='flex items-center gap-x-2'>
+                            <input className='cursor-pointer' checked={eyeCount === "two_eyes"} onChange={() =>setEyeCount("two_eyes")} type="radio" name="two_eyes" id="two_eyes" />
+                            <label htmlFor="two_eyes" className='font-medium text-lg cursor-pointer'>Both Eyes</label>
+                        </div>
+                        <div className='flex items-center gap-x-2'>
+                            <input className='cursor-pointer' checked={eyeCount === "single_eye"} onChange={() =>setEyeCount("single_eye")} type="radio" name="single_eye" id="single_eye" />
+                            <label htmlFor="single_eye" className='font-medium text-lg cursor-pointer'>Single Eye</label>
+                        </div>
+                    </div>
+        
+                    <div className='w-full sm:w-[260px] mt-3'>
+                        <button onClick={() =>fetchResult()} disabled={loading} className='py-2 disabled:cursor-not-allowed disabled:bg-black/70 w-full rounded font-medium text-lg bg-black text-white hover:bg-black/70 cursor-pointer flex items-center justify-center gap-x-2 duration-200'>{loading ? <><Loader2 className='animate-spin size-5' />Loading...</> : <><ScanEye />Check</>}</button>
+                    </div>
+                </div>
+        
+                {(leftEye || rightEye || singleEye) && 
+                    <div className='mt-12 mb-20 sm:mx-10'>
+                        <h1 className='text-center font-bold text-4xl'>🧬Diagnosis Result</h1>
+                        {(eyeCount === "single_eye" && singleEye) ?
+                            <div className='flex items-center justify-center mt-6 w-full'>
+                                <EyeResult eye={"Eye"} diagnosis={singleEye?.class} accuracy={singleEye?.confidence} />
+                            </div> :
+                            <div className='flex lg:flex-row gap-y-7 gap-x-20 flex-col justify-center w-full mt-6'>
+                                {leftEye && <EyeResult eye={"Left Eye"} diagnosis={leftEye?.class} accuracy={leftEye?.confidence} />}
+                                {rightEye && <EyeResult eye={"Right Eye"} diagnosis={rightEye?.class} accuracy={rightEye?.confidence} />}
+                            </div>
+                        }
+        
+                        <div className='flex items-center justify-center mt-10'>
+                            <PDFDownloadLink document={<Pdf leftEye={leftEye} rightEye={rightEye} image={image} singleEye={singleEye} />} fileName='EyeReport.pdf'>
+                                <button className='flex hover:bg-black/70 duration-200 cursor-pointer items-center justify-center gap-x-2 text-white bg-black py-2 px-5 rounded font-medium'>Download<Download className='size-5' /></button>
+                            </PDFDownloadLink>
+                        </div>
+                    </div>
+                }
+            </div>
+          )
+        }
+        
+        export default UploadAndCheck
+        ---
+
+    📁 error_pages/
+      📄 Error_404.jsx
+        ---
+        import { TriangleAlert } from 'lucide-react';
+        import React from 'react'
+        
+        const Error_404 = () => {
+          return (
+            <section className='flex gap-y-1 md:gap-y-4 mt-12 justify-center items-center flex-col'>
+                <div className='flex justify-center gap-3 flex-col items-center xl:p-20 p-4 md:p-20 rounded'>
+                    <div className='flex flex-row-reverse font-playfair gap-4 md:gap-6 items-center text-5xl sm:text-8xl font-bold text-slate-600'>
+                        <h1 className=''>Error 404</h1>
+                        <TriangleAlert className='size-20' />
+                    </div>
+                    <h3 className='text-4xl sm:text-6xl font-bold font-playfair text-slate-500'>Page Not Found</h3>
+                </div>
+            </section>
+          )
+        }
+        
+        export default Error_404
+        ---
+
+      📄 Error_500.jsx
+        ---
+        import { TriangleAlert } from 'lucide-react';
+        import React from 'react'
+        
+        const Error_500 = () => {
+          return (
+            <section className='flex gap-y-1 mt-12 md:gap-y-4 justify-center items-center flex-col'>
+                <div className='flex justify-center gap-3 flex-col items-center xl:p-20 p-4 md:p-20 rounded'>
+                    <div className='flex flex-row-reverse font-playfair gap-4 md:gap-6 items-center text-5xl sm:text-8xl font-bold text-slate-600'>
+                        <h1 className=''>Error 500</h1>
+                        <TriangleAlert className='size-20' />
+                    </div>
+                    <h3 className='text-3xl sm:text-6xl font-bold font-playfair text-slate-500'>Internal Server Error</h3>
+                </div>
+            </section>
+          )
+        }
+        
+        export default Error_500
+        ---
+
+    📁 hooks/
+      📄 useScrollToTop.js
+        ---
+        import { useEffect } from "react";
+        import { useLocation } from "react-router-dom";
+        
+        const useScrollToTop = () => {
+        
+            //Getting Location
+            const { pathname } = useLocation();
+        
+            //UseEffect to Scroll top everytime we click Link tag or Navigate function
+            useEffect(() => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }, [pathname]);
+        };
+        
+        export default useScrollToTop;
+        
+        ---
+
+    📄 index.css
+      ---
+      @import "tailwindcss";
+      
+      @theme {
+        --color-primary: #ff6b81;
+      }
+      ---
+
+    📄 main.jsx
+      ---
+      import { createRoot } from 'react-dom/client'
+      import './index.css'
+      import App from './App.jsx'
+      import { BrowserRouter } from 'react-router-dom'
+      import { Toaster } from 'react-hot-toast'
+      
+      createRoot(document.getElementById('root')).render(
+        <BrowserRouter>
+          <App />
+          <Toaster position="top-right" reverseOrder={false} toastOptions={{style: {backgroundColor: "black", color: "white", paddingRight: "20px", paddingLeft: "20px"}, duration: 1000}} />
+        </BrowserRouter>,
+      )
+      
+      ---
+
+    📁 pages/
+      📄 About.jsx
+        ---
+        import React from 'react'
+        import CnnImg from '../assets/Cnn.jpg'
+        import { techStack } from '../utils/data'
+        
+        const About = () => {
+          return (
+            <section className="sm:mt-9 sm:ml-10 mt-7 mx-2 space-y-10 sm:space-y-12">
+              {/* Hero Section */}
+              <div className="text-center">
+                <h1 className="sm:text-4xl text-3xl font-extrabold mb-2 sm:mb-4">About DeepSightX</h1>
+                <p className="text-gray-600 font-medium sm:text-lg max-w-3xl mx-auto">
+                  A smart AI-powered platform for early detection of retinal and neurodegenerative diseases using facial imaging and deep learning.
+                </p>
+              </div>
+        
+              {/* Purpose */}
+              <div>
+                <h2 className="text-2xl font-bold mb-3">Project Purpose 🔍</h2>
+                <p className="text-gray-700 leading-relaxed text-base">
+                  This web application is developed as a diagnostic tool to detect eye-related and neurological disorders early using AI. 
+                  With real-time predictions, condition descriptions, and downloadable reports, DeepSightX makes diagnostics accessible and fast.
+                </p>
+              </div>
+        
+              {/* Architecture */}
+              <div>
+                <h2 className="text-2xl font-bold mb-3">AI Model Architecture 🧠</h2>
+                <p className="text-gray-700 mb-4">
+                  The deep learning pipeline used in DeepSightX is a Convolutional Neural Network (CNN) optimized for image classification. The model processes a 224x224 RGB image and goes through layers of convolution, activation, pooling, and dense connections to output predictions on various eye-related and neurological conditions.
+                </p>
+                <div className="rounded-xl overflow-hidden shadow-lg border">
+                  <img src={CnnImg} alt="CNN Model Architecture" className="w-full h-auto"/>
+                </div>
+              </div>
+        
+              {/* Tech Stack */}
+              <div>
+                <h2 className="text-2xl font-bold mb-4">Technology Stack 💻</h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                  {techStack.map((element) => (
+                    <div key={element.id} className="bg-white p-4 text-center rounded-lg shadow-md hover:shadow-lg transition">
+                      <p className="text-primary font-semibold">{element.name}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+        
+              {/* Workflows */}
+              <div>
+                <h2 className="text-2xl font-bold mb-4">Project Workflows 🔄</h2>
+        
+                {/* Software-Only Workflow */}
+                <h3 className="text-xl font-semibold mb-2">Software-Only Mode (Web-based)</h3>
+                <ol className="list-decimal pl-5 space-y-2 text-gray-700">
+                  <li>User can either upload an image or perform a live webcam check from the browser.</li>
+                  <li>Image is directly sent to Roboflow for analysis using the frontend connection.</li>
+                  <li>Prediction result is displayed along with disease condition and confidence score.</li>
+                  <li>User can download the result in a detailed PDF report.</li>
+                </ol>
+        
+                {/* Software + Hardware Workflow */}
+                <h3 className="text-xl font-semibold mt-6 mb-2">Software + Hardware Mode (with Raspberry Pi)</h3>
+                <ol className="list-decimal pl-5 space-y-2 text-gray-700">
+                  <li>User uploads an image from the frontend to a Flask API hosted on Raspberry Pi.</li>
+                  <li>The API forwards the image to Roboflow and returns prediction result.</li>
+                  <li>Alternatively, Raspberry Pi captures a live image via its camera for prediction.</li>
+                  <li>Predictions and reports are then handled and shown in the web interface.</li>
+                </ol>
+              </div>
+        
+              {/* Features */}
+              <div>
+                <h2 className="text-2xl font-bold mb-4">Key Features ✨</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="bg-white p-6 rounded-xl shadow text-center">
+                    <div className="text-3xl">📷</div>
+                    <h3 className="font-semibold mt-2">AI Image Analysis</h3>
+                    <p className="text-sm text-gray-600">Deep learning model trained to identify conditions from uploaded images.</p>
+                  </div>
+                  <div className="bg-white p-6 rounded-xl shadow text-center">
+                    <div className="text-3xl">🎥</div>
+                    <h3 className="font-semibold mt-2">Live Video Check</h3>
+                    <p className="text-sm text-gray-600">Real-time diagnosis using live webcam or Raspberry Pi camera feed.</p>
+                  </div>
+                  <div className="bg-white p-6 rounded-xl shadow text-center">
+                    <div className="text-3xl">📄</div>
+                    <h3 className="font-semibold mt-2">PDF Report</h3>
+                    <p className="text-sm text-gray-600">Download comprehensive diagnostic reports for sharing and records.</p>
+                  </div>
+                  <div className="bg-white p-6 rounded-xl shadow text-center">
+                    <div className="text-3xl">🏥</div>
+                    <h3 className="font-semibold mt-2">Hospital Connect</h3>
+                    <p className="text-sm text-gray-600">Find nearby hospitals and specialists relevant to the detected condition.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )
+        }
+        
+        export default About
+        ---
+
+      📄 Diseases.jsx
+        ---
+        import React, { useState } from 'react'
+        import UploadAndCheck from '../components/UploadAndCheck'
+        import LiveCheck from '../components/LiveCheck'
+        import { UploadCloud, Video } from "lucide-react"
+        
+        const Diseases = () => {
+        
+          const [changeSection, setChangeSection] = useState(false)
+        
+          return (
+            <section className='sm:mt-9 sm:ml-10 mt-7 mx-2'>
+              <div>
+                <h1 className='font-bold text-3xl '>Check Your Eyes Instantly with AI 🧠👁️</h1>
+                <p className='font-medium pt-4 indent-6 text-justify sm:px-7'>Upload a clear image of your face, and let DeepSightX analyze each eye individually using advanced AI. Our system detects visible signs of eye-related conditions like crossed eyes, normal alignment, and more — returning results for both your left and right eyes, each with a confidence score to indicate prediction accuracy.</p>
+                <p className='font-medium pt-3 indent-6 text-justify sm:pt-2 sm:px-7'>This feature is designed to assist in early detection and guide you toward better eye care decisions. Whether you're curious about your vision or supporting clinical follow-ups, our tool is fast, secure, and easy to use.</p>
+                <p className='border-l-4 pl-3 py-2 text-primary font-bold mt-5 sm:mt-7 sm:ml-7 text-xl border-primary'>Just upload. Let AI do the rest.</p>
+              </div>
+        
+              <div className="w-full sm:max-w-xl sm:mx-auto mt-10 sm:mt-12 sm:px-4">
+                <h1 className="text-3xl font-semibold text-center mb-5 text-gray-800">Detection Type</h1>
+        
+                <div className="flex justify-center space-x-6 mb-5">
+                  <button onClick={() => setChangeSection(false)} className={`text-sm flex cursor-pointer items-center gap-2 px-3 sm:px-5 py-2 sm:text-lg font-medium border-b-2 transition ${!changeSection ? " border-b-black": "text-gray-600 border-b-transparent"}`}>
+                    <UploadCloud className='size-[20px]' />
+                    Upload & Check
+                  </button>
+        
+                  <button onClick={() => setChangeSection(true)} className={`text-sm flex cursor-pointer items-center gap-2 px-3 sm:px-5 py-2 sm:text-lg font-medium border-b-2 transition ${changeSection ? " border-b-black": "text-gray-600 border-b-transparent"}`}>
+                    <Video className='size-[20px]' />
+                    Live Check
+                  </button>
+                </div>
+              </div>
+        
+              {!changeSection ? 
+                <UploadAndCheck /> :
+                <LiveCheck />
+              }
+        
+            </section>
+          )
+        }
+        
+        export default Diseases
+        ---
+
+      📄 Doctors.jsx
+        ---
+        import React from 'react'
+        import { hospitalData } from '../utils/data'
+        import { useParams } from 'react-router-dom'
+        import EachDoctor from '../components/EachDoctor'
+        
+        const Doctors = () => {
+        
+            const { hospitalname } = useParams()
+        
+            const doctorsData = hospitalData.find((element) =>element.hospital_name == hospitalname.split("%20")[0]).doctors
+        
+          return (
+            <section className='mt-5 mx-2 sm:p-5'>
+              <div className="grid grid-cols-1 md:grid-cols-2 sm:gap-8 items-center">
+                <div>          
+                  <h1 className="text-5xl font-serif font-extrabold text-gray-900 leading-tight mb-4">
+                    Expert <span className='text-primary'>Doctors</span> <br className="hidden md:block" />
+                    Backed by Innovation
+                  </h1>
+        
+                  <p className="text-gray-700 text-lg mb-6">
+                    Our AI-enhanced system connects you with top-tier specialists from India's leading hospitals.
+                    Whether it’s eye care or neurological treatment, find the right doctor for your needs here.
+                  </p>
+        
+                  <p className='border-l-4 pl-3 py-2 mt-5 text-primary font-semibold uppercase tracking-wide text-lg mb-3 sm:text-xl sm:ml-5 border-primary'>Your Care Team, At a Glance</p>
+        
+                </div>
+        
+                <div className="sm:flex hidden justify-center">
+                  <img src="https://cdn-icons-png.flaticon.com/512/3871/3871387.png" alt="Doctor Illustration" className="sm:w-72 w-44 h-auto object-contain"/>
+                </div>
+              </div>
+        
+              <div className='flex flex-wrap lg:gap-12 gap-8 justify-center mt-5 sm:mt-10 '>
+                {doctorsData.map((element) =>(
+                  <EachDoctor key={element.doctor_id} element={element} />
+                ))}
+              </div>
+            </section>
+          )
+        }
+        
+        export default Doctors
+        ---
+
+      📄 Home.jsx
+        ---
+        import React from 'react'
+        import Hero from '../components/Hero'
+        import AffectedCount from '../components/AffectedCount'
+        
+        const Home = () => {
+          return (
+            <>
+                <Hero />
+                <AffectedCount />
+            </>
+          )
+        }
+        
+        export default Home
+        ---
+
+      📄 Hospitals.jsx
+        ---
+        import React from 'react'
+        import { hospitalData } from '../utils/data'
+        import EachHospital from '../components/EachHospital'
+        import { useState } from 'react'
+        import Pagination from '../components/Pagination'
+        import { useParams } from 'react-router-dom'
+        
+        const Hospitals = () => {
+          
+          const { pageNumber } = useParams()
+        
+          const postsPerPage = 4
+          const lastPostIndex = pageNumber * postsPerPage
+          const firstPostIndex = lastPostIndex - postsPerPage
+        
+        
+          return (
+            <section className='sm:mt-9 sm:ml-10 mt-7 mx-2'>
+              <div>
+                <h1 className='font-bold sm:text-3xl text-[29px]'>Find the Right Hospital for Your Care🏥</h1>
+                <p className='font-medium pt-4 indent-6 text-justify sm:px-7'>Below is a list of hospitals tailored for your needs. View their contact info, websites, and explore the doctors associated with each by clicking the Doctors button.</p>
+              </div>
+        
+              <div className='flex flex-col gap-8 mt-10 sm:mx-7'>
+                {hospitalData.slice(firstPostIndex, lastPostIndex).map((element) =>(
+                  <EachHospital key={element.hospital_id} element={element} />
+                ))}
+        
+                <Pagination totalPosts={hospitalData.length} postsPerPage={postsPerPage} pageNumber={pageNumber} />
+              </div>
+            </section>
+          )
+        }
+        
+        export default Hospitals
+        ---
+
+    📁 utils/
+      📄 AccuracyBar.jsx
+        ---
+        import React from 'react'
+        import { styles } from './PdfStyle';
+        import { View } from 'lucide-react';
+        
+        const AccuracyBar = ({ value }) => {
+            const percentage = Math.round(value * 100)
+            const barColor = percentage >= 70 ? '#22c55e' : percentage >= 40 ? '#facc15' : '#ef4444'
+            
+            return (
+              <View style={styles.accuracyBarContainer}>
+                <View style={{ height: '100%', width: `${percentage}%`, backgroundColor: barColor}} />
+              </View>
+            )
+        }
+        
+        export default AccuracyBar
+        ---
+
+      📄 Pdf.jsx
+        ---
+        import { Document, Image, Page, Text, View } from '@react-pdf/renderer'
+        import { styles } from './PdfStyle'
+        import React from 'react'
+        import AccuracyBar from './AccuracyBar';
+        import { diseaseDescription } from './data';
+        
+        const Pdf = ({ leftEye, rightEye, image, singleEye }) => {
+            const timestamp = new Date().toLocaleString()
+        
+            return (
+                <Document>
+                    <Page size="A4" style={styles.page}>
+                        <View style={styles.borderContainer}>
+                            {/* Logo and Website Name */}
+                            <View style={styles.header}>
+                                <Image style={styles.logo} src={'/logo.png'} />
+                                <Text style={styles.siteName}>DeepSightX</Text>
+                            </View>
+        
+                            {/* Title and Timestamp */}
+                            <Text style={styles.title}>Diagnosis Result</Text>
+                            <Text style={styles.timestamp}>Generated on: {timestamp}</Text>
+        
+                            <View style={styles.imageSection}>
+                                <Image style={styles.image} src={image} />
+                            </View>
+        
+                            {/* SINGLE EYE */}
+                            {singleEye && (
+                                <View style={styles.section}>
+                                    <Text style={styles.eyeTitle}>EYE:</Text>
+                                    <Text style={styles.disease}>Detected: {singleEye.class.split("_").join(" ")}</Text>
+                                    <View style={styles.accuracyWrapper}>
+                                        <Text>
+                                            <Text style={styles.label}>Accuracy:</Text>{' '}
+                                            {Math.round(singleEye.confidence * 100)}%
+                                        </Text>
+                                        <AccuracyBar value={singleEye.confidence} />
+                                    </View>
+                                    <View style={styles.descriptionBox}>
+                                        <Text style={styles.label}>Description:</Text>
+                                        <Text style={styles.descriptionText}>{diseaseDescription.find((element) =>element.name == singleEye.class)?.description}</Text>
+                                    </View>
+                                </View>
+                            )}
+        
+                            {/* LEFT EYE */}
+                            {leftEye && (
+                                <View style={styles.section}>
+                                    <Text style={styles.eyeTitle}>LEFT EYE:</Text>
+                                    <Text style={styles.disease}>Detected: {leftEye.class.split("_").join(" ")}</Text>
+                                    <View style={styles.accuracyWrapper}>
+                                        <Text>
+                                            <Text style={styles.label}>Accuracy:</Text>{' '}
+                                            {Math.round(leftEye.confidence * 100)}%
+                                        </Text>
+                                        <AccuracyBar value={leftEye.confidence} />
+                                    </View>
+                                    <View style={styles.descriptionBox}>
+                                        <Text style={styles.label}>Description:</Text>
+                                        <Text style={styles.descriptionText}>{diseaseDescription.find((element) =>element.name == leftEye.class)?.description}</Text>
+                                    </View>
+                                </View>
+                            )}
+        
+                            {/* RIGHT EYE */}
+                            {rightEye && (
+                                <View style={styles.section}>
+                                    <Text style={styles.eyeTitle}>RIGHT EYE:</Text>
+                                    <Text style={styles.disease}>Detected: {rightEye.class.split("_").join(" ")}</Text>
+                                    <View style={styles.accuracyWrapper}>
+                                        <Text>
+                                            <Text style={styles.label}>Accuracy:</Text>{' '}
+                                            {Math.round(rightEye.confidence * 100)}%
+                                        </Text>
+                                        <AccuracyBar value={rightEye.confidence} />
+                                    </View>
+                                    <View style={styles.descriptionBox}>
+                                        <Text style={styles.label}>Description:</Text>
+                                        <Text style={styles.descriptionText}>{diseaseDescription.find((element) =>element.name == rightEye.class)?.description}</Text>
+                                    </View>
+                                </View>
+                            )}
+                        </View>
+                    </Page>
+                </Document>
+            )
+        }
+        export default Pdf
+        ---
+
+      📄 PdfStyle.jsx
+        ---
+        import { StyleSheet } from '@react-pdf/renderer'
+        
+        export const styles = StyleSheet.create({
+            page: {
+                backgroundColor: '#f4f4f5',
+                padding: 20,
+            },
+            borderContainer: {
+                border: '1px solid black',
+                borderRadius: 5,
+                padding: 20,
+                height: "100%",
+            },  
+            header: {
+                marginBottom: 16,
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+            },
+            logo: {
+                width: 50,
+                height: 50,
+            },
+            siteName: {
+                fontSize: 24,
+                fontWeight: 'bold',
+                color: '#0a84ff',
+            },
+            title: {
+                textAlign: 'center',
+                fontSize: 20,
+                fontWeight: 'bold',
+                marginBottom: 10,
+                color: '#111',
+            },
+            timestamp: {
+                textAlign: 'center',
+                fontSize: 10,
+                color: '#666',
+                marginBottom: 20,
+            },
+            section: {
+                marginBottom: 25,
+                padding: 15,
+                backgroundColor: '#fff',
+                borderRadius: 6,
+            },
+            eyeTitle: {
+                fontSize: 16,
+                fontWeight: 'bold',
+                marginBottom: 7,
+            },
+            disease: {
+                color: '#e6005c',
+                fontWeight: 'bold',
+                marginBottom: 7,
+            },
+            label: {
+                fontWeight: 'bold',
+                marginBottom: 5
+            },
+            accuracyWrapper: {
+                marginBottom: 10,
+            },
+            accuracyBarContainer: {
+                height: 11,
+                backgroundColor: '#d3d3d3',
+                borderRadius: 5,
+                overflow: 'hidden',
+                marginLeft: 7,
+                marginVertical: 4,
+            },
+            descriptionBox: {
+                marginTop: 4,
+            },
+            descriptionText: {
+                fontSize: 11,
+                marginTop: 2,
+                marginLeft: 7,
+                color: '#333',
+            },
+            imageSection: {
+                marginBottom: 20,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+            },
+            image: {
+                width: 200,
+                borderRadius: 8,
+                border: '1pt solid #ccc',
+                margin: '0 auto',
+            },
+        })
+        ---
+
+      📄 data.js
+        ---
+        import logo1 from "../assets/hospital_logo/logo1.png"
+        import logo2 from "../assets/hospital_logo/logo2.png"
+        import logo3 from "../assets/hospital_logo/logo3.png"
+        import logo4 from "../assets/hospital_logo/logo4.png"
+        import logo5 from "../assets/hospital_logo/logo5.png"
+        import logo6 from "../assets/hospital_logo/logo6.png"
+        import logo7 from "../assets/hospital_logo/logo7.png"
+        import logo8 from "../assets/hospital_logo/logo8.png"
+        import logo9 from "../assets/hospital_logo/logo9.png"
+        import logo10 from "../assets/hospital_logo/logo10.png"
+        import logo11 from "../assets/hospital_logo/logo11.png"
+        import logo12 from "../assets/hospital_logo/logo12.png"
+        import logo13 from "../assets/hospital_logo/logo13.png"
+        import logo14 from "../assets/hospital_logo/logo14.png"
+        import logo15 from "../assets/hospital_logo/logo15.png"
+        import logo16 from "../assets/hospital_logo/logo16.png"
+        import logo17 from "../assets/hospital_logo/logo17.png"
+        import logo18 from "../assets/hospital_logo/logo18.png"
+        import logo19 from "../assets/hospital_logo/logo19.png"
+        import maleImg from "../assets/doctor_image/Male.png"
+        import femaleImg from "../assets/doctor_image/female.png"
+        
+        export const diseaseCount = [
+            {
+                id: 1,
+                name: "Bulging Eyes",
+                count: 50,
+                system: "K"
+            },
+            {
+                id: 2,
+                name: "Crossed Eyes",
+                count: 10,
+                system: "L"
+            },
+            {
+                id: 3,
+                name: "Parkinson",
+                count: 5,
+                system: "L"
+            },
+            {
+                id: 4,
+                name: "Uveitis",
+                count: 5,
+                system: "L"
+            },
+            {
+                id: 5,
+                name: "Glaucoma",
+                count: 110,
+                system: "L"
+            },
+            {
+                id: 6,
+                name: "Cataracts",
+                count: 600,
+                system: "L"
+            }
+        ]
+        
+        export const diseaseDescription = [
+            {
+                name: "Bulging_eyes",
+                description: "Bulging eyes, also known as exophthalmos or proptosis, is a condition where the eyeball protrudes from the eye socket. This can be caused by various factors, including thyroid disease, tumors, or inflammation. Symptoms may include discomfort, vision changes, and difficulty closing the eyelids."
+            },
+            {
+                name: "Crossed_Eyes",
+                description: "Crossed eyes, or strabismus, is a condition where the eyes do not properly align with each other. This can lead to double vision or difficulty focusing. Treatment options include glasses, eye patches, or surgery."
+            },
+            {
+                name: "Parkinson",
+                description: "Parkinson's disease is a progressive neurological disorder that affects movement. Symptoms include tremors, stiffness, and difficulty with balance and coordination. Treatment may involve medications, physical therapy, and lifestyle changes."
+            },
+            {
+                name: "Uveitis",
+                description: "Uveitis is an inflammation of the uvea, the middle layer of the eye. It can cause redness, pain, light sensitivity, and vision changes. Treatment typically involves corticosteroids and other anti-inflammatory medications."
+            },
+            {
+                name: "Glaucoma",
+                description: "Glaucoma is a group of eye conditions that damage the optic nerve, often due to high intraocular pressure. It can lead to vision loss if not treated. Regular eye exams and medications are essential for managing glaucoma."
+            },
+            {
+                name: "Cataracts",
+                description: "Cataracts are a clouding of the eye's natural lens, leading to blurred vision and difficulty seeing at night. They are common with aging and can be treated with surgery to replace the cloudy lens with an artificial one."
+            },
+            {
+                name: "Normal_eyes",
+                description: "Normal eyes refer to healthy eyes without any visible signs of disease or abnormalities. Regular eye check-ups are important to maintain eye health and prevent potential issues."
+            }
+        ]
+        
+        export const hospitalData = [
+            {
+                hospital_id: 1,
+                hospital_logo: logo1,
+                hospital_name: "Sankara Nethralaya Hospital",
+                hospital_phoneno: "+91-4442271500",
+                hospital_link: "https://www.sankaranethralaya.org/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Abinaya Valliappan",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Pediatric Ophthalmology and Strabismus"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. Jyotirmay Biswas",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Ocular inflammation, uveitis research"
+                    },
+                    {
+                        doctor_id: 3,
+                        doctor_name: "Dr. Sudha K Ganesh",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Ocular inflammation, cataract surgery"
+                    },
+                    {
+                        doctor_id: 4,
+                        doctor_name: "Dr. Suchitra Pradeep",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Uveitis and Cataract Services"
+                    },
+                    {
+                        doctor_id: 5,
+                        doctor_name: "Dr. Sharanya Sarah Abraham",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Uveitis"
+                    },
+                    {
+                        doctor_id: 6,
+                        doctor_name: "Dr. Ronnie George",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Glaucoma diagnosis and management"
+                    },
+                    {
+                        doctor_id: 7,
+                        doctor_name: "Dr. Lingam Vijaya",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Glaucoma and cataract"
+                    },
+                    {
+                        doctor_id: 8,
+                        doctor_name: "Dr. Shantha B",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Pediatric glaucoma"
+                    },
+                    {
+                        doctor_id: 9,
+                        doctor_name: "Dr. Divya Shetty",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Glaucoma"
+                    },
+                    {
+                        doctor_id: 10,
+                        doctor_name: "Dr. Parivadhini A",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Glaucoma"
+                    },
+                ]
+            },
+            {
+                hospital_id: 2,
+                hospital_logo: logo2,
+                hospital_name: "Apollo Hospital",
+                hospital_phoneno: "+91-4428290956",
+                hospital_link: "https://www.apollohospitals.com/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Pratik Ranjan Sen",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Ophthalmology"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. Rajesh Gupta",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Ophthalmology"
+                    },
+                    {
+                        doctor_id: 3,
+                        doctor_name: "Dr. Uma Ramesh",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Pediatric Ophthalmology"
+                    },
+                    {
+                        doctor_id: 4,
+                        doctor_name: "Dr. Pratik Ranjan Sen",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Ophthalmology"
+                    },
+                    {
+                        doctor_id: 5,
+                        doctor_name: "Dr. P. Vijayashankar",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Neurology"
+                    },
+                    {
+                        doctor_id: 6,
+                        doctor_name: "Dr. Geetha Lakshmipathy",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Neurology"
+                    },
+                    {
+                        doctor_id: 7,
+                        doctor_name: "Dr. Aparna Bhatnagar",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Ophthalmology"
+                    },
+                    {
+                        doctor_id: 8,
+                        doctor_name: " Dr. Atheeswar Das",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Ophthalmology"
+                    },
+                    {
+                        doctor_id: 9,
+                        doctor_name: "Dr. Meenakshi Pande",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Ophthalmology"
+                    },
+                    {
+                        doctor_id: 10,
+                        doctor_name: "Dr. Mary Abraham",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Ophthalmology"
+                    }
+                ]
+            },
+            {
+                hospital_id: 3,
+                hospital_logo: logo3,
+                hospital_name: "Aravind Eye Hospital",
+                hospital_phoneno: "+91-4524356100",
+                hospital_link: "https://aravind.org/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. P. Vijayalakshmi",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Pediatric Ophthalmology"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. R. Ramakrishnan",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Retina and Vitreous"
+                    }
+                ]
+            },
+            {
+                hospital_id: 4,
+                hospital_logo: logo4,
+                hospital_name: "Vasan Eye Care",
+                hospital_phoneno: "18005712222",
+                hospital_link: "https://vasaneye.com/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Janani M",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Pediatric Ophthalmology & Strabismus"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. Uma Maheshwari S",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Medical Retina & Uvea"
+                    },
+                    {
+                        doctor_id: 3,
+                        doctor_name: "Dr. R. Dhivya",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Glaucoma & General Ophthalmology"
+                    },
+                    {
+                        doctor_id: 4,
+                        doctor_name: "Dr. Preethi G",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Glaucoma & Cataract Surgery"
+                    },
+                    {
+                        doctor_id: 5,
+                        doctor_name: "Dr. Kaushik",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Cataract Surgery"
+                    },
+                    {
+                        doctor_id: 6,
+                        doctor_name: "Dr. Pavan Kumar MG",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Cataract & Glaucoma Surgery"
+                    }
+                ]
+            },
+            {
+                hospital_id: 5,
+                hospital_logo: logo5,
+                hospital_name: "Kumaran Eye Care",
+                hospital_phoneno: "044-24839557",
+                hospital_link: "https://kumaraneyecare.in/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. M. Kumaran",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Orbit and Oculoplasty, Cataract, Glaucoma, Medical Retina"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. P. Kumaravel",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Neuro-Ophthalmology"
+                    },
+                    {
+                        doctor_id: 3,
+                        doctor_name: "Dr. Balasubramanian",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Medical Retina, Uveitis"
+                    }
+                ]
+            },
+            {
+                hospital_id: 6,
+                hospital_logo: logo6,
+                hospital_name: "Gleneagles Health City",
+                hospital_phoneno: "044-44777000",
+                hospital_link: "https://www.gleneagleshospitals.co.in/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Ravindra Mohan E",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Oculoplasty, Orbit, and Trauma Services"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. Gitanjali Fernandez",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Pediatric Ophthalmology and Strabismus"
+                    },
+                    {
+                        doctor_id: 3,
+                        doctor_name: "Dr. Ravindra Mohan E",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Neuro-Ophthalmology"
+                    }
+                ]
+            },
+            {
+                hospital_id: 7,
+                hospital_logo: logo7,
+                hospital_name: "Apollo Spectra Hospital",
+                hospital_phoneno: "1-860-500-2244",
+                hospital_link: "https://www.apollospectra.com/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Ashok Rangarajan",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Oculoplasty and Orbit Disorders"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. V.C. Parthasarathy",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Pediatric Ophthalmology and Squint Surgery"
+                    },
+                    {
+                        doctor_id: 3,
+                        doctor_name: "Dr. Meenakshi Pande",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Neuro-Ophthalmology"
+                    },
+                    {
+                        doctor_id: 4,
+                        doctor_name: "Dr. Sapna K Mardi",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Medical Retina and Uveitis"
+                    },
+                    {
+                        doctor_id: 5,
+                        doctor_name: "Dr. Manoj Subhash Khatri",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Glaucoma Management"
+                    },
+                    {
+                        doctor_id: 6,
+                        doctor_name: "Dr. Sridhar Baratan",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Cataract Surgery"
+                    },
+                    {
+                        doctor_id: 7,
+                        doctor_name: "Dr. Pratik Ranjan Sen",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Cataract and Refractive Surgery"
+                    }
+                ]
+            },
+            {
+                hospital_id: 8,
+                hospital_logo: logo8,
+                hospital_name: "RK Eye Centre",
+                hospital_phoneno: "+91-8939941585",
+                hospital_link: "https://rkeyecentre.com/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Rajini Kantha Narendranath",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Oculoplasty and Orbit Disorders"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: " Dr. Naveen Narendranath",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Pediatric Ophthalmology and Strabismus"
+                    }
+                ]
+            },
+            {
+                hospital_id: 9,
+                hospital_logo: logo9,
+                hospital_name: "Udhi Eye Hospital",
+                hospital_phoneno: "044-43471111",
+                hospital_link: "https://www.udhieyehospitals.com/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Allen S. Raveendran",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Oculoplasty and Orbit Disorders"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. Anbarasi",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Pediatric Ophthalmology and Strabismus"
+                    },
+                    {
+                        doctor_id: 3,
+                        doctor_name: "Dr. R. Raveendran",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Neuro-Ophthalmology"
+                    },
+                    {
+                        doctor_id: 4,
+                        doctor_name: "Dr. Sherren Raveendran",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Uveitis and Retinal Disorders"
+                    }
+                ]
+            },
+            {
+                hospital_id: 10,
+                hospital_logo: logo10,
+                hospital_name: "Dr. Agarwal’s Eye Hospital",
+                hospital_phoneno: "+91-9594904015",
+                hospital_link: "https://www.dragarwal.com/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Kaladevi Sathish",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Orbit, Oculoplasty, Facial Aesthetic & Ophthalmic Plastic Surgery"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. Balasubramaniam S",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Orbit, Oculoplasty, Ocular Oncology, Therapeutic Oculoplasty"
+                    },
+                    {
+                        doctor_id: 3,
+                        doctor_name: "Dr. Manjula Jayakumar",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Neuro Ophthalmology, Paediatric Ophthalmology"
+                    },
+                    {
+                        doctor_id: 4,
+                        doctor_name: "Dr. Akshya",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Squint, General Ophthalmology, Paediatric Ophthalmology"
+                    },
+                    {
+                        doctor_id: 5,
+                        doctor_name: "Dr. Preetha Rajasekaran",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Glaucoma, Cataract, General Ophthalmology, Neuro Ophthalmology, Paediatric Ophthalmology"
+                    },
+                    {
+                        doctor_id: 6,
+                        doctor_name: "Dr. Dhivya Ashok Kumar",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Uvea, Oculoplasty, Ocular Oncology"
+                    },
+                    {
+                        doctor_id: 7,
+                        doctor_name: "Dr. Karpagam D",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Cataract, Uveitis, General Ophthalmology"
+                    },
+                    {
+                        doctor_id: 8,
+                        doctor_name: "Prof. Amar Agarwal",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Cataract, Glaucoma, Cornea, Retina, General Ophthalmology"
+                    },
+                    {
+                        doctor_id: 9,
+                        doctor_name: "Dr. K. S. Ramakrishnan",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Cataract, Glaucoma, General Ophthalmology"
+                    },
+                    {
+                        doctor_id: 10,
+                        doctor_name: "Dr. Murali Ariga",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Glaucoma, General Ophthalmology"
+                    }
+                ]
+            },
+            {
+                hospital_id: 11,
+                hospital_logo: logo11,
+                hospital_name: "Rainbow Children’s Hospital",
+                hospital_phoneno: "+91-8062261290",
+                hospital_link: "https://www.rainbowhospitals.in/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Sumana Manohar",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Pediatric ENT and Airway Disorders"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. Meenakshi Sundaram",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Pediatric Neurology"
+                    },
+                ]
+            },
+            {
+                hospital_id: 12,
+                hospital_logo: logo12,
+                hospital_name: "Fortis Malar Hospital",
+                hospital_phoneno: "+91-9205010100",
+                hospital_link: "https://www.fortismalarhospital.com/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Radhi Malar Anand",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Comprehensive Ophthalmology with a focus on Pediatric Ophthalmology"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. Rajiv Lochan",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Liver Transplant and HPB Surgery"
+                    },
+                    {
+                        doctor_id: 3,
+                        doctor_name: "Dr. R. Karthik",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Urology & Renal Transplant"
+                    }
+                ]
+            },
+            {
+                hospital_id: 13,
+                hospital_logo: logo13,
+                hospital_name: "Iswarya Hospital",
+                hospital_phoneno: "044-20252025",
+                hospital_link: "https://iswarya.com/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Aishwarya T",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Ophthalmology"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. S. Suresh",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Ophthalmology"
+                    }
+                ]
+            },
+            {
+                hospital_id: 14,
+                hospital_logo: logo14,
+                hospital_name: "Pristyn Care",
+                hospital_phoneno: "+91-7303763223",
+                hospital_link: "https://www.pristyncare.com/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Prerana Tripathi",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Ophthalmology"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. Sushama Suram",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Ophthalmology"
+                    }
+                ]
+            },
+            {
+                hospital_id: 15,
+                hospital_logo: logo15,
+                hospital_name: "MGM Healthcare",
+                hospital_phoneno: "+91-4442004200",
+                hospital_link: "https://mgmmalar.in/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Radhi Malar Anand",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Comprehensive Ophthalmology with a focus on Pediatric Ophthalmology"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. Anupam Sahu",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Crossed eyes and Strabismus"
+                    },
+                    {
+                        doctor_id: 3,
+                        doctor_name: "Dr. Nagarajan V",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Neurology with a focus on movement disorders"
+                    },
+                    {
+                        doctor_id: 4,
+                        doctor_name: "Dr. Mihir Mishra",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Uveitis and Ocular Oncology"
+                    },
+                    {
+                        doctor_id: 5,
+                        doctor_name: "Dr. Debasish Dash",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Diagnosis and management of glaucoma"
+                    },
+                    {
+                        doctor_id: 6,
+                        doctor_name: "Dr. Suhasini",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Cataract surgery and comprehensive eye care"
+                    }
+                ]
+            },
+            {
+                hospital_id: 16,
+                hospital_logo: logo16,
+                hospital_name: "Sri Ramachandra Medical Centre",
+                hospital_phoneno: "044-45928692",
+                hospital_link: "https://www.sriramachandramedicalcentre.com/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Radha Annamalai",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Oculoplasty and orbital surgery"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. Suhas Prabhakar",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Strabismus and pediatric ophthalmology"
+                    },
+                    {
+                        doctor_id: 3,
+                        doctor_name: "Dr. Stephen Sudhakar K",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Neuro-ophthalmology"
+                    },
+                    {
+                        doctor_id: 4,
+                        doctor_name: "Dr. M. Meera Alias Devasena",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Uveitis and ocular immunology"
+                    },
+                    {
+                        doctor_id: 5,
+                        doctor_name: "Dr. M. Muthayya",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Glaucoma"
+                    },
+                    {
+                        doctor_id: 6,
+                        doctor_name: "Dr. C. Arvind Babu",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Cataract and refractive surgery"
+                    }
+                ]
+            },
+            {
+                hospital_id: 17,
+                hospital_logo: logo17,
+                hospital_name: "Medway Hospital",
+                hospital_phoneno: "+91-8377805564",
+                hospital_link: "https://medwayhospitals.com/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Salim J. Thomas",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Oculoplasty and orbital surgery"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. K. Jothinathan",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Strabismus and pediatric ophthalmology"
+                    },
+                    {
+                        doctor_id: 3,
+                        doctor_name: "Dr. D. Divakar",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Neuro-ophthalmology"
+                    },
+                    {
+                        doctor_id: 4,
+                        doctor_name: "Dr. C. M. Thiagarajan",
+                        doctor_image: maleImg,
+                        doctor_speciality: "Uveitis and ocular immunology"
+                    }
+                ]
+            },
+            {
+                hospital_id: 18,
+                hospital_logo: logo18,
+                hospital_name: "SIMS Hospital",
+                hospital_phoneno: "+91-4420002001",
+                hospital_link: "https://simshospitals.com/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Aparna Bhatnagar",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Oculoplasty and orbital surgery"
+                    },
+                    {
+                        doctor_id: 2,
+                        doctor_name: "Dr. Kalpana R",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Strabismus and pediatric ophthalmology"
+                    },
+                    {
+                        doctor_id: 3,
+                        doctor_name: "Dr. Prativa Misra",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "Medical retina and uveitis"
+                    }
+                ]
+            },
+            {
+                hospital_id: 19,
+                hospital_logo: logo19,
+                hospital_name: "Deepa Hospital",
+                hospital_phoneno: "+91-9069336933",
+                hospital_link: "https://deepahospital.in/",
+                doctors: [
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. Sudha Bhuvaneshwari",
+                        doctor_image: femaleImg,
+                        doctor_speciality: "General ophthalmology with experience in orbital and oculoplastic conditions"
+                    },
+                    {
+                        doctor_id: 1,
+                        doctor_name: "Dr. R. Venkatesh",
+                        doctor_image: maleImg,
+                        doctor_speciality: "General ophthalmology with experience in orbital and oculoplastic conditions"
+                    }
+                ]
+            },
+        ]
+        
+        export const techStack = [
+            {
+                id: 1,
+                name: "React.js"
+            },
+            {
+                id: 2,
+                name: "Tailwind CSS"
+            },
+            {
+                id: 3,
+                name: "CNN"
+            },
+            {
+                id: 4,
+                name: "Python"
+            },
+            {
+                id: 5,
+                name: "Tensorflow"
+            },
+            {
+                id: 6,
+                name: "Roboflow"
+            },
+            {
+                id: 7,
+                name: "OpenCV"
+            }, 
+            {
+                id: 8,
+                name: "Flask"
+            },
+            {
+                id: 9,
+                name: "Raspberry Pi"
+            }
+        ]
+        ---
+
+  📄 vite.config.js
+    ---
+    import { defineConfig } from 'vite'
+    import react from '@vitejs/plugin-react'
+    import tailwindcss from '@tailwindcss/vite'
+    
+    // https://vite.dev/config/
+    export default defineConfig({
+      plugins: [react(), tailwindcss()],
+    })
+    
+    ---
+
+📄 eslint.config.js
+  ---
+  import js from '@eslint/js'
+  import globals from 'globals'
+  import reactHooks from 'eslint-plugin-react-hooks'
+  import reactRefresh from 'eslint-plugin-react-refresh'
+  
+  export default [
+    { ignores: ['dist'] },
+    {
+      files: ['**/*.{js,jsx}'],
+      languageOptions: {
+        ecmaVersion: 2020,
+        globals: globals.browser,
+        parserOptions: {
+          ecmaVersion: 'latest',
+          ecmaFeatures: { jsx: true },
+          sourceType: 'module',
+        },
+      },
+      plugins: {
+        'react-hooks': reactHooks,
+        'react-refresh': reactRefresh,
+      },
+      rules: {
+        ...js.configs.recommended.rules,
+        ...reactHooks.configs.recommended.rules,
+        'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+        'react-refresh/only-export-components': [
+          'warn',
+          { allowConstantExport: true },
+        ],
+      },
+    },
+  ]
+  
+  ---
+
+📄 index.html
+  ---
+  <!doctype html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      <title>DeepSightX - AI Eye Disease Detection</title>
+    
+      <!-- Primary Meta Tags -->
+      <meta name="title" content="DeepSightX - AI Eye Disease Detection">
+      <meta name="description" content="DeepSightX is a smart AI-powered diagnostic platform that detects retinal and neurological diseases using facial and eye images.">
+    
+      <!-- Favicon -->
+      <link rel="icon" type="image/png" href="/logo.png" />
+    
+      <!-- Open Graph / Facebook -->
+      <meta property="og:type" content="website">
+      <meta property="og:url" content="https://deepsightx.netlify.app/">
+      <meta property="og:title" content="DeepSightX - AI Eye Disease Detection">
+      <meta property="og:description" content="Upload or scan live using webcam to detect Cataracts, Glaucoma, and more. Download detailed diagnostic reports instantly.">
+      <meta property="og:image" content="https://deepsightx.netlify.app/logo.png">
+    
+      <!-- Twitter -->
+      <meta property="twitter:card" content="summary_large_image">
+      <meta property="twitter:url" content="https://deepsightx.netlify.app/">
+      <meta property="twitter:title" content="DeepSightX - AI Eye Disease Detection">
+      <meta property="twitter:description" content="Smart AI-powered platform for retinal and neurological disease prediction. Upload image or use live webcam detection.">
+      <meta property="twitter:image" content="https://deepsightx.netlify.app/logo.png">
+    </head>
+    <body class="bg-gray-200">
+      <div id="root"></div>
+      <script type="module" src="/src/main.jsx"></script>
+    </body>
+  </html>
+  
+  ---
+
+📁 public/
+  📄 _redirects
+    [Binary file]
+
+📁 src/
+  📄 App.jsx
+    ---
+    import React from 'react'
+    import { Route, Routes } from 'react-router-dom'
+    import Home from './pages/Home'
+    import Navbar from './components/Navbar'
+    import Error_500 from './error_pages/Error_500'
+    import Error_404 from './error_pages/Error_404'
+    import Diseases from './pages/Diseases'
+    import Hospitals from './pages/Hospitals'
+    import About from './pages/About'
+    import Footer from './components/Footer'
+    import Doctors from './pages/Doctors'
+    import useScrollToTop from './hooks/useScrollToTop'
+    
+    const App = () => {
+    
+      //Hook to scroll to top on route change
+      useScrollToTop()
+    
+      return (
+        <main className='max-w-7xl px-4 lg:px-0 mx-auto'>
+          <Navbar />
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/diseases' element={<Diseases />} />
+            <Route path='/hospitals/:pageNumber' element={<Hospitals />} />
+            <Route path='/doctors/:hospitalname' element={<Doctors />} />
+            <Route path='/about' element={<About />} />
+    
+            <Route path='/500' element={<Error_500 />} />
+            <Route path='*' element={<Error_404 />} />
+          </Routes>
+          <Footer />
+        </main>
+      )
+    }
+    
+    export default App
+    ---
+
+  📁 assets/
+    📁 doctor_image/
+    📁 hospital_logo/
+  📁 components/
+    📄 AffectedCount.jsx
+      ---
+      import React from 'react'
+      import { diseaseCount } from '../utils/data'
+      import CountUp from 'react-countup'
+      import { useInView } from 'react-intersection-observer'
+      
+      const AffectedCount = () => {
+      
+          const { ref, inView } = useInView({ triggerOnce: false })
+      
+        return (
+          <section ref={ref} className='my-10 mt-16 sm:mt-20'>
+              {/* Title */}
+              <div className='space-y-2'>
+                  <h1 className='text-4xl font-bold font-serif'>India's Eye & Neurological Disease Burden</h1>
+                  <p className='text-justify sm:pl-[50px] text-[22px] text-gray-800'>Millions of people in India suffer from vision-related conditions and neurological disorders. Early detection and treatment can help prevent severe complications and improve quality of life. Here are the estimated affected numbers,</p>
+              </div>
+      
+              {/* Count */}
+              <div className='grid lg:grid-cols-6 place-items-center sm:grid-cols-3 grid-cols-2 mt-7 px-5 flex-wrap gap-y-7 sm:gap-y-8 gap-x-16'>
+                  {diseaseCount.map((element) =>(
+                      <div key={element.id} className='flex flex-col lg:gap-y-1 items-center'>
+                          <div className='flex text-primary text-[40px] sm:text-5xl lg:text-6xl font-bold items-center'>
+                              {inView && <CountUp start={0} end={element.count} delay={0} duration={5} />}
+                              <p>{element.system}</p>
+                              <span className='pl-0.5'>+</span>
+                          </div>
+                          <h1 className='sm:text-xl mt-[-7px] sm:mt-0 font-bold'>{element.name}</h1>
+                      </div>
+                  ))}
+              </div>
+          </section>
+        )
+      }
+      
+      export default AffectedCount
+      ---
+
+    📄 EachDoctor.jsx
+      ---
+      import React from 'react'
+      
+      const EachDoctor = ({ element }) => {
+        return (
+          <div className='flex w-[300px] sm:w-[250px] p-4 relative flex-col gap-y-5 rounded-lg border border-slate-400'>
+              <div className='flex items-center justify-center flex-1'>
+                  <img src={element.doctor_image} alt="DoctorImage" />
+              </div>
+              <div>
+                  <h1 className='font-bold text-lg'>{element.doctor_name}</h1>
+                  <p className='font-medium text-gray-500'>{element.doctor_speciality}</p>
+              </div>
+          </div>
+        )
+      }
+      
+      export default EachDoctor
+      ---
+
+    📄 EachHospital.jsx
+      ---
+      import React from 'react'
+      import { Phone, Link, ArrowRight } from 'lucide-react'
+      import { useNavigate } from 'react-router-dom'
+      
+      const EachHospital = ({ element }) => {
+      
+          const navigate = useNavigate()
+      
+        return (
+              <div className='flex relative flex-col sm:flex-row gap-x-7 rounded-lg shadow-xl bg-white'>
+                  <div className='flex items-center pl-3 pt-5 sm:pt-0 sm:w-[300px]'>
+                      <img className='w-full' src={element.hospital_logo} alt="HospitalLogo" />
+                  </div>
+                  
+                  <div className='p-6 flex-1 space-y-3'>
+                      <h1 className='sm:text-3xl flex-1 text-2xl font-serif mt-[-2px] font-bold pb-3 sm:pb-4'>{element.hospital_name}</h1>
+                      <div className='flex items-center ml-2 gap-x-2'>
+                          <Phone />
+                          <p className='font-medium'>{element.hospital_phoneno}</p>
+                      </div>
+                      <div className='flex items-center ml-2 gap-x-2'>
+                          <Link />
+                          <a href={element.hospital_link} target='__blank' className='font-medium underline cursor-pointer truncate text-blue-500'>{element.hospital_link}</a>
+                      </div>
+      
+                      <div className='flex mt-6 justify-end items-end'>
+                          <button onClick={() =>navigate(`/doctors/${element.hospital_name}`)} className='rounded px-4 py-2 font-medium text-lg bg-black text-white hover:bg-black/70 cursor-pointer flex items-center justify-center gap-x-2 duration-200'>Doctors <ArrowRight /></button>
+                      </div>
+                  </div>
+              </div>
+          )
+      }
+      
+      export default EachHospital
+      ---
+
+    📄 EyeResult.jsx
+      ---
+      import React from 'react'
+      import { diseaseDescription } from '../utils/data'
+      
+      const EyeResult = ({ eye, diagnosis, accuracy }) => {
+      
+        const barColor = Math.round(accuracy * 100) >= 70 ? '#22c55e' : Math.round(accuracy * 100) >= 40 ? '#facc15' : '#ef4444'
+        const desc = diseaseDescription.find((element) =>element.name == diagnosis)
+      
+        return (
+          <div className='border lg:w-[50%] shadow-xl bg-white border-slate-300 rounded-2xl p-7'>
+            <h1 className='uppercase text-center font-bold text-3xl font-mono'>{eye}</h1>
+            <h2 className='text-primary mt-1 text-center font-bold text-2xl'>Detected: {diagnosis.split("_").join(" ")}</h2>
+            <div className='space-y-2 my-4'>
+              <p className='text-lg font-medium'>Accuracy: <span className='text-primary pl-1'>{Math.round(accuracy * 100)}%</span></p>
+              <div className='w-full h-3.5 bg-slate-300 rounded-full relative'>
+                <p style={{width: `${Math.round(accuracy * 100)}%`, backgroundColor: barColor}} className={`absolute left-0 rounded-full top-0 bottom-0`}></p>
+              </div>
+            </div>
+      
+            <div className='shadow-xl border border-slate-300 mt-5 p-6 rounded-xl shadow-slate-300'>
+              <h4 className='font-medium pb-1 text-lg'>Description:</h4>
+              <p className='indent-6 text-justify'>{desc?.description}</p>
+            </div>
+          </div>
+        )
+      }
+      
+      export default EyeResult
+      ---
+
+    📄 Footer.jsx
+      ---
+      import React from 'react'
+      import { Link } from 'react-router-dom'
+      
+      const Footer = () => {
+        return (
+          <footer className="text-black pt-5 mt-16 border-t border-gray-300">
+              <div className="flex flex-col md:flex-row items-start md:justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 md:space-y-0">
+                  
+                  {/* Logo */}
+                  <Link to={'/'} className="flex items-center ml-[-15px]">
+                      <img className="w-16 sm:w-20" src="/logo.png" alt="logo" />
+                      <h1 className="text-primary font-bold text-xl">DeepSightX</h1>
+                  </Link>
+      
+                  {/* Quick Links */}
+                  <div className="w-full md:w-auto">
+                      <h2 className="text-lg font-semibold">Quick Links</h2>
+                      <ul className="mt-2 space-y-2">
+                          <li><Link to={'/'} className="hover:text-primary">Home</Link></li>
+                          <li><Link to={"/diseases"} className="hover:text-primary">Diseases</Link></li>
+                          <li><Link to={"/hospitals/1"} className="hover:text-primary">Hospitals</Link></li>
+                          <li><Link to={"/about"} className="hover:text-primary">About</Link></li>
+                      </ul>
+                  </div>
+      
+                  {/* About Section */}
+                  <div className="w-full md:w-[330px]">
+                      <h2 className="text-lg font-semibold">About Us</h2>
+                      <p className="text-sm mt-2">Advancing eye care with AI-powered imaging to detect retinal and neurodegenerative diseases early.</p>
+                  </div>
+      
+              </div>
+      
+              <div className="mt-6 text-center text-sm py-4 border-t border-gray-300">
+                  © 2025 DeepSightX | All Rights Reserved
+              </div>
+          </footer>
+        
+      
+        )
+      }
+      
+      export default Footer
+      ---
+
+    📄 Hero.jsx
+      ---
+      import React from 'react'
+      import heroImg from '../assets/hero.png'
+      
+      const Hero = () => {
+        return (
+          <section className='flex gap-x-10 lg:flex-row gap-y-7 flex-col flex-between items-center justify-between mt-7 sm:mt-9 mb-10 md:mb-14'>
+              <div className='font-bold lg:w-[700px]'>
+                  <h3 className='text-primary text-lg sm:text-xl pb-4'>Welcome to the eye care destination</h3>
+                  <div className='sm:text-[44px] text-[32px] font-serif leading-12 sm:leading-16'>
+                      Early Detection of <span className='text-primary'>Retinal</span> and <span className='text-primary'>Neurodegenerative</span> Diseases Using AI-Powered Imaging
+                  </div>
+              </div>
+              <div>
+                  <img className='rounded-br-3xl w-[calc(100vw-10px)] lg:w-full rounded-tl-3xl' src={heroImg} alt="heroImg" />
+              </div>
+          </section>
+        )
+      }
+      
+      export default Hero
+      ---
+
+    📄 LiveCheck.jsx
+      ---
+      import React, { useRef, useEffect, useState } from "react"
+      import Webcam from "react-webcam"
+      import axios from "axios"
+      
+      const LiveCheck = () => {
+          const webcamRef = useRef(null)
+          const canvasRef = useRef(null)
+          const [loading, setLoading] = useState(false)
+      
+          async function sendFrameToRoboflow(imageSrc){
+              return new Promise((resolve, reject) =>{
+                  const img = new Image()
+                  img.src = imageSrc
+                  img.crossOrigin = "anonymous"
+      
+                  img.onload = async () =>{
+                      const tempCanvas = document.createElement("canvas")
+                      const ctx = tempCanvas.getContext("2d")
+                      tempCanvas.width = img.width
+                      tempCanvas.height = img.height
+      
+                      ctx.drawImage(img, 0, 0, img.width, img.height)
+                      const imageData = ctx.getImageData(0, 0, img.width, img.height)
+                      const data = imageData.data
+      
+                      // Convert RGB to BGR
+                      for (let i = 0; i < data.length; i += 4){
+                          const r = data[i]
+                          data[i] = data[i + 2]      // Red <- Blue
+                          data[i + 2] = r            // Blue <- Red
+                      }
+      
+                      ctx.putImageData(imageData, 0, 0)
+      
+                      tempCanvas.toBlob(async (blob) =>{
+                          const formData = new FormData()
+                          formData.append("file", blob)
+      
+                          try{
+                              const response = await axios.post(`${import.meta.env.VITE_ROBOFLOW_API_URL}?api_key=${import.meta.env.VITE_ROBOFLOW_API_KEY}`, formData)
+                              resolve(response.data)
+                          } 
+                          catch (err){
+                              console.error("Error sending to Roboflow:", err.message)
+                              reject(err)
+                          }
+                      }, "image/jpeg")
+                  }
+      
+                  img.onerror = (e) =>{
+                      reject("Failed to load image")
+                  }
+              })
+          }
+      
+          async function drawPredictions(predictions){
+              const ctx = canvasRef.current?.getContext("2d")
+              ctx?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+      
+              predictions?.forEach((prediction) =>{
+                  const { x, y, width, height, class: label, confidence } = prediction
+      
+                  ctx.strokeStyle = "green"
+                  ctx.lineWidth = 3
+                  ctx.strokeRect(x - width / 2, y - height / 2, width, height)
+      
+                  ctx.font = "18px Arial"
+                  ctx.fillStyle = "green"
+                  ctx.fillText(`${label} (${Math.round(confidence * 100)}%)`, x - width / 2, y - height / 2 - 10)
+              })
+          }
+      
+          useEffect(() =>{
+              const interval = setInterval(async () =>{
+                  if(webcamRef.current && webcamRef.current.getScreenshot && !loading){
+                      setLoading(true)
+                      const imageSrc = webcamRef.current.getScreenshot()
+                      if(imageSrc){
+                          try{
+                              const result = await sendFrameToRoboflow(imageSrc)
+                              drawPredictions(result?.predictions || [])
+                          } 
+                          catch (error){
+                              console.error("Detection error:", error.message)
+                          }
+                      }
+                      setLoading(false)
+                  }
+              }, 300) // Every second
+      
+              return () => clearInterval(interval)
+          }, [loading])
+      
+          return (
+              <section id="live-check" className="px-6 pt-5 pb-10 text-center">
+                  <h2 className="text-3xl font-bold mb-4">Live Eye Check 👁️</h2>
+                  <p className="text-gray-600 mb-6">Enable camera and let AI analyze your eyes live.</p>
+      
+                  <div className="flex justify-center">
+                      <div className="relative">
+                          <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" width={640} height={480} className="rounded shadow-lg"/>
+                          <canvas ref={canvasRef} width={640} height={480} className="absolute top-0 left-0 rounded" style={{ position: "absolute", top: 0, left: 0 }}/>
+                      </div>
+                  </div>
+              </section>
+          );
+      };
+      
+      export default LiveCheck;
+      
+      ---
+
+    📄 Navbar.jsx
+      ---
+      import { Menu, X } from 'lucide-react'
+      import React, { useState } from 'react'
+      import { Link, NavLink } from 'react-router-dom'
+      
+      const Navbar = () => {
+      
+        const [visible, setvisible] = useState(false)
+      
+        return (
+          <header className='flex ml-[-14px] lg:ml-0 items-center justify-between py-1'>
+              {/* Logo */}
+              <Link to={'/'} className='flex items-center'>
+                  <img className='sm:w-20 w-14' src="/logo.png" alt="logo" />
+                  <h1 className='sm:text-xl text-primary font-bold'>DeepSightX</h1>
+              </Link>
+      
+              {/* Navigation Links */}
+              <div className='lg:flex hidden items-center gap-x-14 text-gray-600 font-medium rounded-2xl uppercase px-7 py-2.5'>
+                  <NavLink to="/" className={(({isActive}) => isActive ? "border-b-2 py-1 text-primary" : `py-1`)}>Home</NavLink>
+                  <NavLink to="/diseases" className={(({isActive}) => isActive ? "border-b-2 py-1 text-primary" : `py-1`)}>Diseases</NavLink>
+                  <NavLink to="/hospitals/1" className={(({isActive}) => isActive ? "border-b-2 py-1 text-primary" : `py-1`)}>Hospitals</NavLink>
+                  <NavLink to="/about" className={(({isActive}) => isActive ? "border-b-2 py-1 text-primary" : `py-1`)}>About</NavLink>
+              </div>
+      
+              {/* Menu Icon */}
+              <Menu onClick={() =>setvisible(!visible)} className='lg:hidden text-gray-600 size-7 cursor-pointer' />
+      
+              {/* Sidebar Menu for Mobile */}
+              <nav className={`fixed z-50 lg:hidden sm:pl-10 sm:pr-5 transition-transform duration-300 ease-in-out left-0 top-0 bottom-0 w-[55%] sm:w-[50%] bg-white shadow-xl shadow-slate-700 ${visible ? "translate-x-0" : "-translate-x-full"}`}>
+                  <X onClick={() =>setvisible(!visible)} className='absolute right-4 cursor-pointer md:text-3xl top-10 text-gray-600 text-2xl ' />
+                  <div className='flex text-gray-600 flex-col items-end text-end gap-y-8 mt-24 md:pl-44 md:text-xl md:pr-16 px-10'>
+                      <NavLink onClick={() =>setvisible(!visible)} to='/' className={(({isActive}) => isActive ? "border-b-2 w-32 py-2 text-primary uppercase font-medium sm:text-lg" : `py-1 uppercase font-medium sm:text-lg`)}>Home</NavLink>
+                      <NavLink onClick={() =>setvisible(!visible)} to='/diseases' className={(({isActive}) => isActive ? "border-b-2 w-32 py-2 text-primary uppercase font-medium sm:text-lg" : `py-1 uppercase font-medium sm:text-lg`)}>Diseases</NavLink>
+                      <NavLink onClick={() =>setvisible(!visible)} to='/hospitals/1' className={(({isActive}) => isActive ? "border-b-2 w-32 py-2 text-primary uppercase font-medium sm:text-lg" : `py-1 uppercase font-medium sm:text-lg`)}>Hospitals</NavLink>
+                      <NavLink onClick={() =>setvisible(!visible)} to='/about' className={(({isActive}) => isActive ? "border-b-2 w-32 py-2 text-primary uppercase font-medium sm:text-lg" : `py-1 uppercase font-medium sm:text-lg`)}>About</NavLink>
+                  </div>
+              </nav>
+          </header>
+        )
+      }
+      
+      export default Navbar
+      ---
+
+    📄 Pagination.jsx
+      ---
+      import React from 'react'
+      import { useNavigate } from 'react-router-dom'
+      
+      const Pagination = ({ totalPosts, postsPerPage, pageNumber }) => {
+      
+          const navigate = useNavigate()
+          let pages = []
+          for(let i = 1; i <= Math.ceil(totalPosts/postsPerPage); i++){
+              pages.push(i)
+          }
+      
+          function handlePageChange(pageNumber){
+              navigate(`/hospitals/${pageNumber}`)
+              window.scrollTo({ top: 0, behavior: "smooth" })
+          }
+      
+          return (
+              <div className='flex justify-center flex-wrap items-center gap-4 mt-5'>
+                  {pages.map((element) =>(
+                      <button onClick={() =>handlePageChange(element)} key={element} className={`bg-[#F2F2F2] text-[#000000] cursor-pointer font-semibold px-4 py-2 rounded-md hover:bg-[#000000] hover:text-[#FFFFFF] ${element == pageNumber ? "bg-black text-white" : "bg-white text-black"}`}>{element}</button>
+                  ))}
+              </div>
+          )
+      }
+      
+      export default Pagination
+      ---
+
+    📄 UploadAndCheck.jsx
+      ---
+      import React, { useEffect, useState } from 'react'
+      import axios from 'axios'
+      import { useNavigate } from 'react-router-dom'
+      import uploadImg from '../assets/upload_area.png'
+      import { Download, Loader2, ScanEye } from 'lucide-react'
+      import EyeResult from './EyeResult'
+      import toast from 'react-hot-toast'
+      import { PDFDownloadLink } from '@react-pdf/renderer'
+      import Pdf from '../utils/Pdf'
+      
+      const UploadAndCheck = () => {
+      
+          const [image, setImage] = useState(null)
+          const [leftEye, setLeftEye] = useState(null)
+          const [rightEye, setRightEye] = useState(null)
+          const [singleEye, setSingleEye] = useState(null)
+          const [loading, setLoading] = useState(false)
+          const [eyeCount, setEyeCount] = useState("two_eyes")
+          
+          const navigate = useNavigate()
+        
+          async function fetchResult(){
+              if(!image){
+                  return toast.error("Please upload an image")
+              }
+              const formData = new FormData()
+              formData.append('file', image)
+              setLoading(true)
+              try{
+                  const response = await axios.post(`${import.meta.env.VITE_ROBOFLOW_API_URL}?api_key=${import.meta.env.VITE_ROBOFLOW_API_KEY}`, formData)
+          
+                  //Displaying error message if no predictions are found
+                  if(response.data.predictions.length === 0){
+                      return toast.error("Please upload a clear image")
+                  }
+          
+                  //For single eye prediction, finding the highest confidence prediction
+                  if(eyeCount === "single_eye"){
+                      setSingleEye(response.data.predictions.reduce((prev, curr) =>
+                          prev.confidence > curr.confidence ? prev : curr
+                      ))
+                      return;
+                  }
+          
+                  let tempLeftEye = []
+                  let tempRightEye = []
+                  let centrePoint = Math.floor(response.data.image.width / 2)
+          
+                  //Splitting predictions into left and right eye based on x coordinate
+                  for (let i = 0; i < response.data.predictions.length; i++) {
+                      if(response.data.predictions[i].x >= centrePoint){
+                          tempLeftEye.push(response.data.predictions[i])
+                      } 
+                      else{
+                          tempRightEye.push(response.data.predictions[i])
+                      }
+                  }
+          
+                  //Finding highest confidence prediction for left and right eye
+                  if(tempLeftEye.length > 0){
+                      setLeftEye(tempLeftEye.reduce((prev, curr) =>
+                          prev.confidence > curr.confidence ? prev : curr
+                      ))
+                  }
+                  if(tempRightEye.length > 0){
+                      setRightEye(tempRightEye.reduce((prev, curr) =>
+                          prev.confidence > curr.confidence ? prev : curr
+                      ))
+                  }
+              }
+              catch(err){
+                  navigate('/500')
+                  console.log(`Error in Fetch Result - ${err.message}`)
+              }
+              finally{
+                  setLoading(false)
+              }
+          }
+        
+          useEffect(() =>{
+            setLeftEye(null)
+            setRightEye(null)
+            setSingleEye(null)
+          }, [image, eyeCount])
+      
+        return (
+          <div>
+              <div className='mt-10 sm:mx-10 flex sm:items-stcart items-center flex-col'>
+                  <h1 className='font-bold uppercase text-3xl'>UPLOAD NOW 👇</h1>
+                  <label htmlFor="image" className='my-4 mx-7 w-[200px]'>
+                      <img src={image ? URL.createObjectURL(image) : uploadImg} alt="UploadImg" className=' rounded cursor-pointer' />
+                      <input onChange={(event) =>setImage(event.target.files[0])} type="file" name="image" className='hidden' accept='image/*' id="image" />
+                  </label>
+      
+                  <div className='flex items-center justify-center gap-x-5 my-2'>
+                      <div className='flex items-center gap-x-2'>
+                          <input className='cursor-pointer' checked={eyeCount === "two_eyes"} onChange={() =>setEyeCount("two_eyes")} type="radio" name="two_eyes" id="two_eyes" />
+                          <label htmlFor="two_eyes" className='font-medium text-lg cursor-pointer'>Both Eyes</label>
+                      </div>
+                      <div className='flex items-center gap-x-2'>
+                          <input className='cursor-pointer' checked={eyeCount === "single_eye"} onChange={() =>setEyeCount("single_eye")} type="radio" name="single_eye" id="single_eye" />
+                          <label htmlFor="single_eye" className='font-medium text-lg cursor-pointer'>Single Eye</label>
+                      </div>
+                  </div>
+      
+                  <div className='w-full sm:w-[260px] mt-3'>
+                      <button onClick={() =>fetchResult()} disabled={loading} className='py-2 disabled:cursor-not-allowed disabled:bg-black/70 w-full rounded font-medium text-lg bg-black text-white hover:bg-black/70 cursor-pointer flex items-center justify-center gap-x-2 duration-200'>{loading ? <><Loader2 className='animate-spin size-5' />Loading...</> : <><ScanEye />Check</>}</button>
+                  </div>
+              </div>
+      
+              {(leftEye || rightEye || singleEye) && 
+                  <div className='mt-12 mb-20 sm:mx-10'>
+                      <h1 className='text-center font-bold text-4xl'>🧬Diagnosis Result</h1>
+                      {(eyeCount === "single_eye" && singleEye) ?
+                          <div className='flex items-center justify-center mt-6 w-full'>
+                              <EyeResult eye={"Eye"} diagnosis={singleEye?.class} accuracy={singleEye?.confidence} />
+                          </div> :
+                          <div className='flex lg:flex-row gap-y-7 gap-x-20 flex-col justify-center w-full mt-6'>
+                              {leftEye && <EyeResult eye={"Left Eye"} diagnosis={leftEye?.class} accuracy={leftEye?.confidence} />}
+                              {rightEye && <EyeResult eye={"Right Eye"} diagnosis={rightEye?.class} accuracy={rightEye?.confidence} />}
+                          </div>
+                      }
+      
+                      <div className='flex items-center justify-center mt-10'>
+                          <PDFDownloadLink document={<Pdf leftEye={leftEye} rightEye={rightEye} image={image} singleEye={singleEye} />} fileName='EyeReport.pdf'>
+                              <button className='flex hover:bg-black/70 duration-200 cursor-pointer items-center justify-center gap-x-2 text-white bg-black py-2 px-5 rounded font-medium'>Download<Download className='size-5' /></button>
+                          </PDFDownloadLink>
+                      </div>
+                  </div>
+              }
+          </div>
+        )
+      }
+      
+      export default UploadAndCheck
+      ---
+
+  📁 error_pages/
+    📄 Error_404.jsx
+      ---
+      import { TriangleAlert } from 'lucide-react';
+      import React from 'react'
+      
+      const Error_404 = () => {
+        return (
+          <section className='flex gap-y-1 md:gap-y-4 mt-12 justify-center items-center flex-col'>
+              <div className='flex justify-center gap-3 flex-col items-center xl:p-20 p-4 md:p-20 rounded'>
+                  <div className='flex flex-row-reverse font-playfair gap-4 md:gap-6 items-center text-5xl sm:text-8xl font-bold text-slate-600'>
+                      <h1 className=''>Error 404</h1>
+                      <TriangleAlert className='size-20' />
+                  </div>
+                  <h3 className='text-4xl sm:text-6xl font-bold font-playfair text-slate-500'>Page Not Found</h3>
+              </div>
+          </section>
+        )
+      }
+      
+      export default Error_404
+      ---
+
+    📄 Error_500.jsx
+      ---
+      import { TriangleAlert } from 'lucide-react';
+      import React from 'react'
+      
+      const Error_500 = () => {
+        return (
+          <section className='flex gap-y-1 mt-12 md:gap-y-4 justify-center items-center flex-col'>
+              <div className='flex justify-center gap-3 flex-col items-center xl:p-20 p-4 md:p-20 rounded'>
+                  <div className='flex flex-row-reverse font-playfair gap-4 md:gap-6 items-center text-5xl sm:text-8xl font-bold text-slate-600'>
+                      <h1 className=''>Error 500</h1>
+                      <TriangleAlert className='size-20' />
+                  </div>
+                  <h3 className='text-3xl sm:text-6xl font-bold font-playfair text-slate-500'>Internal Server Error</h3>
+              </div>
+          </section>
+        )
+      }
+      
+      export default Error_500
+      ---
+
+  📁 hooks/
+    📄 useScrollToTop.js
+      ---
+      import { useEffect } from "react";
+      import { useLocation } from "react-router-dom";
+      
+      const useScrollToTop = () => {
+      
+          //Getting Location
+          const { pathname } = useLocation();
+      
+          //UseEffect to Scroll top everytime we click Link tag or Navigate function
+          useEffect(() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+          }, [pathname]);
+      };
+      
+      export default useScrollToTop;
+      
+      ---
+
+  📄 index.css
+    ---
+    @import "tailwindcss";
+    
+    @theme {
+      --color-primary: #ff6b81;
+    }
+    ---
+
+  📄 main.jsx
+    ---
+    import { createRoot } from 'react-dom/client'
+    import './index.css'
+    import App from './App.jsx'
+    import { BrowserRouter } from 'react-router-dom'
+    import { Toaster } from 'react-hot-toast'
+    
+    createRoot(document.getElementById('root')).render(
+      <BrowserRouter>
+        <App />
+        <Toaster position="top-right" reverseOrder={false} toastOptions={{style: {backgroundColor: "black", color: "white", paddingRight: "20px", paddingLeft: "20px"}, duration: 1000}} />
+      </BrowserRouter>,
+    )
+    
+    ---
+
+  📁 pages/
+    📄 About.jsx
+      ---
+      import React from 'react'
+      import CnnImg from '../assets/Cnn.jpg'
+      import { techStack } from '../utils/data'
+      
+      const About = () => {
+        return (
+          <section className="sm:mt-9 sm:ml-10 mt-7 mx-2 space-y-10 sm:space-y-12">
+            {/* Hero Section */}
+            <div className="text-center">
+              <h1 className="sm:text-4xl text-3xl font-extrabold mb-2 sm:mb-4">About DeepSightX</h1>
+              <p className="text-gray-600 font-medium sm:text-lg max-w-3xl mx-auto">
+                A smart AI-powered platform for early detection of retinal and neurodegenerative diseases using facial imaging and deep learning.
+              </p>
+            </div>
+      
+            {/* Purpose */}
+            <div>
+              <h2 className="text-2xl font-bold mb-3">Project Purpose 🔍</h2>
+              <p className="text-gray-700 leading-relaxed text-base">
+                This web application is developed as a diagnostic tool to detect eye-related and neurological disorders early using AI. 
+                With real-time predictions, condition descriptions, and downloadable reports, DeepSightX makes diagnostics accessible and fast.
+              </p>
+            </div>
+      
+            {/* Architecture */}
+            <div>
+              <h2 className="text-2xl font-bold mb-3">AI Model Architecture 🧠</h2>
+              <p className="text-gray-700 mb-4">
+                The deep learning pipeline used in DeepSightX is a Convolutional Neural Network (CNN) optimized for image classification. The model processes a 224x224 RGB image and goes through layers of convolution, activation, pooling, and dense connections to output predictions on various eye-related and neurological conditions.
+              </p>
+              <div className="rounded-xl overflow-hidden shadow-lg border">
+                <img src={CnnImg} alt="CNN Model Architecture" className="w-full h-auto"/>
+              </div>
+            </div>
+      
+            {/* Tech Stack */}
+            <div>
+              <h2 className="text-2xl font-bold mb-4">Technology Stack 💻</h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                {techStack.map((element) => (
+                  <div key={element.id} className="bg-white p-4 text-center rounded-lg shadow-md hover:shadow-lg transition">
+                    <p className="text-primary font-semibold">{element.name}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+      
+            {/* Workflows */}
+            <div>
+              <h2 className="text-2xl font-bold mb-4">Project Workflows 🔄</h2>
+      
+              {/* Software-Only Workflow */}
+              <h3 className="text-xl font-semibold mb-2">Software-Only Mode (Web-based)</h3>
+              <ol className="list-decimal pl-5 space-y-2 text-gray-700">
+                <li>User can either upload an image or perform a live webcam check from the browser.</li>
+                <li>Image is directly sent to Roboflow for analysis using the frontend connection.</li>
+                <li>Prediction result is displayed along with disease condition and confidence score.</li>
+                <li>User can download the result in a detailed PDF report.</li>
+              </ol>
+      
+              {/* Software + Hardware Workflow */}
+              <h3 className="text-xl font-semibold mt-6 mb-2">Software + Hardware Mode (with Raspberry Pi)</h3>
+              <ol className="list-decimal pl-5 space-y-2 text-gray-700">
+                <li>User uploads an image from the frontend to a Flask API hosted on Raspberry Pi.</li>
+                <li>The API forwards the image to Roboflow and returns prediction result.</li>
+                <li>Alternatively, Raspberry Pi captures a live image via its camera for prediction.</li>
+                <li>Predictions and reports are then handled and shown in the web interface.</li>
+              </ol>
+            </div>
+      
+            {/* Features */}
+            <div>
+              <h2 className="text-2xl font-bold mb-4">Key Features ✨</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="bg-white p-6 rounded-xl shadow text-center">
+                  <div className="text-3xl">📷</div>
+                  <h3 className="font-semibold mt-2">AI Image Analysis</h3>
+                  <p className="text-sm text-gray-600">Deep learning model trained to identify conditions from uploaded images.</p>
+                </div>
+                <div className="bg-white p-6 rounded-xl shadow text-center">
+                  <div className="text-3xl">🎥</div>
+                  <h3 className="font-semibold mt-2">Live Video Check</h3>
+                  <p className="text-sm text-gray-600">Real-time diagnosis using live webcam or Raspberry Pi camera feed.</p>
+                </div>
+                <div className="bg-white p-6 rounded-xl shadow text-center">
+                  <div className="text-3xl">📄</div>
+                  <h3 className="font-semibold mt-2">PDF Report</h3>
+                  <p className="text-sm text-gray-600">Download comprehensive diagnostic reports for sharing and records.</p>
+                </div>
+                <div className="bg-white p-6 rounded-xl shadow text-center">
+                  <div className="text-3xl">🏥</div>
+                  <h3 className="font-semibold mt-2">Hospital Connect</h3>
+                  <p className="text-sm text-gray-600">Find nearby hospitals and specialists relevant to the detected condition.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )
+      }
+      
+      export default About
+      ---
+
+    📄 Diseases.jsx
+      ---
+      import React, { useState } from 'react'
+      import UploadAndCheck from '../components/UploadAndCheck'
+      import LiveCheck from '../components/LiveCheck'
+      import { UploadCloud, Video } from "lucide-react"
+      
+      const Diseases = () => {
+      
+        const [changeSection, setChangeSection] = useState(false)
+      
+        return (
+          <section className='sm:mt-9 sm:ml-10 mt-7 mx-2'>
+            <div>
+              <h1 className='font-bold text-3xl '>Check Your Eyes Instantly with AI 🧠👁️</h1>
+              <p className='font-medium pt-4 indent-6 text-justify sm:px-7'>Upload a clear image of your face, and let DeepSightX analyze each eye individually using advanced AI. Our system detects visible signs of eye-related conditions like crossed eyes, normal alignment, and more — returning results for both your left and right eyes, each with a confidence score to indicate prediction accuracy.</p>
+              <p className='font-medium pt-3 indent-6 text-justify sm:pt-2 sm:px-7'>This feature is designed to assist in early detection and guide you toward better eye care decisions. Whether you're curious about your vision or supporting clinical follow-ups, our tool is fast, secure, and easy to use.</p>
+              <p className='border-l-4 pl-3 py-2 text-primary font-bold mt-5 sm:mt-7 sm:ml-7 text-xl border-primary'>Just upload. Let AI do the rest.</p>
+            </div>
+      
+            <div className="w-full sm:max-w-xl sm:mx-auto mt-10 sm:mt-12 sm:px-4">
+              <h1 className="text-3xl font-semibold text-center mb-5 text-gray-800">Detection Type</h1>
+      
+              <div className="flex justify-center space-x-6 mb-5">
+                <button onClick={() => setChangeSection(false)} className={`text-sm flex cursor-pointer items-center gap-2 px-3 sm:px-5 py-2 sm:text-lg font-medium border-b-2 transition ${!changeSection ? " border-b-black": "text-gray-600 border-b-transparent"}`}>
+                  <UploadCloud className='size-[20px]' />
+                  Upload & Check
+                </button>
+      
+                <button onClick={() => setChangeSection(true)} className={`text-sm flex cursor-pointer items-center gap-2 px-3 sm:px-5 py-2 sm:text-lg font-medium border-b-2 transition ${changeSection ? " border-b-black": "text-gray-600 border-b-transparent"}`}>
+                  <Video className='size-[20px]' />
+                  Live Check
+                </button>
+              </div>
+            </div>
+      
+            {!changeSection ? 
+              <UploadAndCheck /> :
+              <LiveCheck />
+            }
+      
+          </section>
+        )
+      }
+      
+      export default Diseases
+      ---
+
+    📄 Doctors.jsx
+      ---
+      import React from 'react'
+      import { hospitalData } from '../utils/data'
+      import { useParams } from 'react-router-dom'
+      import EachDoctor from '../components/EachDoctor'
+      
+      const Doctors = () => {
+      
+          const { hospitalname } = useParams()
+      
+          const doctorsData = hospitalData.find((element) =>element.hospital_name == hospitalname.split("%20")[0]).doctors
+      
+        return (
+          <section className='mt-5 mx-2 sm:p-5'>
+            <div className="grid grid-cols-1 md:grid-cols-2 sm:gap-8 items-center">
+              <div>          
+                <h1 className="text-5xl font-serif font-extrabold text-gray-900 leading-tight mb-4">
+                  Expert <span className='text-primary'>Doctors</span> <br className="hidden md:block" />
+                  Backed by Innovation
+                </h1>
+      
+                <p className="text-gray-700 text-lg mb-6">
+                  Our AI-enhanced system connects you with top-tier specialists from India's leading hospitals.
+                  Whether it’s eye care or neurological treatment, find the right doctor for your needs here.
+                </p>
+      
+                <p className='border-l-4 pl-3 py-2 mt-5 text-primary font-semibold uppercase tracking-wide text-lg mb-3 sm:text-xl sm:ml-5 border-primary'>Your Care Team, At a Glance</p>
+      
+              </div>
+      
+              <div className="sm:flex hidden justify-center">
+                <img src="https://cdn-icons-png.flaticon.com/512/3871/3871387.png" alt="Doctor Illustration" className="sm:w-72 w-44 h-auto object-contain"/>
+              </div>
+            </div>
+      
+            <div className='flex flex-wrap lg:gap-12 gap-8 justify-center mt-5 sm:mt-10 '>
+              {doctorsData.map((element) =>(
+                <EachDoctor key={element.doctor_id} element={element} />
+              ))}
+            </div>
+          </section>
+        )
+      }
+      
+      export default Doctors
+      ---
+
+    📄 Home.jsx
+      ---
+      import React from 'react'
+      import Hero from '../components/Hero'
+      import AffectedCount from '../components/AffectedCount'
+      
+      const Home = () => {
+        return (
+          <>
+              <Hero />
+              <AffectedCount />
+          </>
+        )
+      }
+      
+      export default Home
+      ---
+
+    📄 Hospitals.jsx
+      ---
+      import React from 'react'
+      import { hospitalData } from '../utils/data'
+      import EachHospital from '../components/EachHospital'
+      import { useState } from 'react'
+      import Pagination from '../components/Pagination'
+      import { useParams } from 'react-router-dom'
+      
+      const Hospitals = () => {
+        
+        const { pageNumber } = useParams()
+      
+        const postsPerPage = 4
+        const lastPostIndex = pageNumber * postsPerPage
+        const firstPostIndex = lastPostIndex - postsPerPage
+      
+      
+        return (
+          <section className='sm:mt-9 sm:ml-10 mt-7 mx-2'>
+            <div>
+              <h1 className='font-bold sm:text-3xl text-[29px]'>Find the Right Hospital for Your Care🏥</h1>
+              <p className='font-medium pt-4 indent-6 text-justify sm:px-7'>Below is a list of hospitals tailored for your needs. View their contact info, websites, and explore the doctors associated with each by clicking the Doctors button.</p>
+            </div>
+      
+            <div className='flex flex-col gap-8 mt-10 sm:mx-7'>
+              {hospitalData.slice(firstPostIndex, lastPostIndex).map((element) =>(
+                <EachHospital key={element.hospital_id} element={element} />
+              ))}
+      
+              <Pagination totalPosts={hospitalData.length} postsPerPage={postsPerPage} pageNumber={pageNumber} />
+            </div>
+          </section>
+        )
+      }
+      
+      export default Hospitals
+      ---
+
+  📁 utils/
+    📄 AccuracyBar.jsx
+      ---
+      import React from 'react'
+      import { styles } from './PdfStyle';
+      import { View } from 'lucide-react';
+      
+      const AccuracyBar = ({ value }) => {
+          const percentage = Math.round(value * 100)
+          const barColor = percentage >= 70 ? '#22c55e' : percentage >= 40 ? '#facc15' : '#ef4444'
+          
+          return (
+            <View style={styles.accuracyBarContainer}>
+              <View style={{ height: '100%', width: `${percentage}%`, backgroundColor: barColor}} />
+            </View>
+          )
+      }
+      
+      export default AccuracyBar
+      ---
+
+    📄 Pdf.jsx
+      ---
+      import { Document, Image, Page, Text, View } from '@react-pdf/renderer'
+      import { styles } from './PdfStyle'
+      import React from 'react'
+      import AccuracyBar from './AccuracyBar';
+      import { diseaseDescription } from './data';
+      
+      const Pdf = ({ leftEye, rightEye, image, singleEye }) => {
+          const timestamp = new Date().toLocaleString()
+      
+          return (
+              <Document>
+                  <Page size="A4" style={styles.page}>
+                      <View style={styles.borderContainer}>
+                          {/* Logo and Website Name */}
+                          <View style={styles.header}>
+                              <Image style={styles.logo} src={'/logo.png'} />
+                              <Text style={styles.siteName}>DeepSightX</Text>
+                          </View>
+      
+                          {/* Title and Timestamp */}
+                          <Text style={styles.title}>Diagnosis Result</Text>
+                          <Text style={styles.timestamp}>Generated on: {timestamp}</Text>
+      
+                          <View style={styles.imageSection}>
+                              <Image style={styles.image} src={image} />
+                          </View>
+      
+                          {/* SINGLE EYE */}
+                          {singleEye && (
+                              <View style={styles.section}>
+                                  <Text style={styles.eyeTitle}>EYE:</Text>
+                                  <Text style={styles.disease}>Detected: {singleEye.class.split("_").join(" ")}</Text>
+                                  <View style={styles.accuracyWrapper}>
+                                      <Text>
+                                          <Text style={styles.label}>Accuracy:</Text>{' '}
+                                          {Math.round(singleEye.confidence * 100)}%
+                                      </Text>
+                                      <AccuracyBar value={singleEye.confidence} />
+                                  </View>
+                                  <View style={styles.descriptionBox}>
+                                      <Text style={styles.label}>Description:</Text>
+                                      <Text style={styles.descriptionText}>{diseaseDescription.find((element) =>element.name == singleEye.class)?.description}</Text>
+                                  </View>
+                              </View>
+                          )}
+      
+                          {/* LEFT EYE */}
+                          {leftEye && (
+                              <View style={styles.section}>
+                                  <Text style={styles.eyeTitle}>LEFT EYE:</Text>
+                                  <Text style={styles.disease}>Detected: {leftEye.class.split("_").join(" ")}</Text>
+                                  <View style={styles.accuracyWrapper}>
+                                      <Text>
+                                          <Text style={styles.label}>Accuracy:</Text>{' '}
+                                          {Math.round(leftEye.confidence * 100)}%
+                                      </Text>
+                                      <AccuracyBar value={leftEye.confidence} />
+                                  </View>
+                                  <View style={styles.descriptionBox}>
+                                      <Text style={styles.label}>Description:</Text>
+                                      <Text style={styles.descriptionText}>{diseaseDescription.find((element) =>element.name == leftEye.class)?.description}</Text>
+                                  </View>
+                              </View>
+                          )}
+      
+                          {/* RIGHT EYE */}
+                          {rightEye && (
+                              <View style={styles.section}>
+                                  <Text style={styles.eyeTitle}>RIGHT EYE:</Text>
+                                  <Text style={styles.disease}>Detected: {rightEye.class.split("_").join(" ")}</Text>
+                                  <View style={styles.accuracyWrapper}>
+                                      <Text>
+                                          <Text style={styles.label}>Accuracy:</Text>{' '}
+                                          {Math.round(rightEye.confidence * 100)}%
+                                      </Text>
+                                      <AccuracyBar value={rightEye.confidence} />
+                                  </View>
+                                  <View style={styles.descriptionBox}>
+                                      <Text style={styles.label}>Description:</Text>
+                                      <Text style={styles.descriptionText}>{diseaseDescription.find((element) =>element.name == rightEye.class)?.description}</Text>
+                                  </View>
+                              </View>
+                          )}
+                      </View>
+                  </Page>
+              </Document>
+          )
+      }
+      export default Pdf
+      ---
+
+    📄 PdfStyle.jsx
+      ---
+      import { StyleSheet } from '@react-pdf/renderer'
+      
+      export const styles = StyleSheet.create({
+          page: {
+              backgroundColor: '#f4f4f5',
+              padding: 20,
+          },
+          borderContainer: {
+              border: '1px solid black',
+              borderRadius: 5,
+              padding: 20,
+              height: "100%",
+          },  
+          header: {
+              marginBottom: 16,
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+          },
+          logo: {
+              width: 50,
+              height: 50,
+          },
+          siteName: {
+              fontSize: 24,
+              fontWeight: 'bold',
+              color: '#0a84ff',
+          },
+          title: {
+              textAlign: 'center',
+              fontSize: 20,
+              fontWeight: 'bold',
+              marginBottom: 10,
+              color: '#111',
+          },
+          timestamp: {
+              textAlign: 'center',
+              fontSize: 10,
+              color: '#666',
+              marginBottom: 20,
+          },
+          section: {
+              marginBottom: 25,
+              padding: 15,
+              backgroundColor: '#fff',
+              borderRadius: 6,
+          },
+          eyeTitle: {
+              fontSize: 16,
+              fontWeight: 'bold',
+              marginBottom: 7,
+          },
+          disease: {
+              color: '#e6005c',
+              fontWeight: 'bold',
+              marginBottom: 7,
+          },
+          label: {
+              fontWeight: 'bold',
+              marginBottom: 5
+          },
+          accuracyWrapper: {
+              marginBottom: 10,
+          },
+          accuracyBarContainer: {
+              height: 11,
+              backgroundColor: '#d3d3d3',
+              borderRadius: 5,
+              overflow: 'hidden',
+              marginLeft: 7,
+              marginVertical: 4,
+          },
+          descriptionBox: {
+              marginTop: 4,
+          },
+          descriptionText: {
+              fontSize: 11,
+              marginTop: 2,
+              marginLeft: 7,
+              color: '#333',
+          },
+          imageSection: {
+              marginBottom: 20,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+          },
+          image: {
+              width: 200,
+              borderRadius: 8,
+              border: '1pt solid #ccc',
+              margin: '0 auto',
+          },
+      })
+      ---
+
+    📄 data.js
+      ---
+      import logo1 from "../assets/hospital_logo/logo1.png"
+      import logo2 from "../assets/hospital_logo/logo2.png"
+      import logo3 from "../assets/hospital_logo/logo3.png"
+      import logo4 from "../assets/hospital_logo/logo4.png"
+      import logo5 from "../assets/hospital_logo/logo5.png"
+      import logo6 from "../assets/hospital_logo/logo6.png"
+      import logo7 from "../assets/hospital_logo/logo7.png"
+      import logo8 from "../assets/hospital_logo/logo8.png"
+      import logo9 from "../assets/hospital_logo/logo9.png"
+      import logo10 from "../assets/hospital_logo/logo10.png"
+      import logo11 from "../assets/hospital_logo/logo11.png"
+      import logo12 from "../assets/hospital_logo/logo12.png"
+      import logo13 from "../assets/hospital_logo/logo13.png"
+      import logo14 from "../assets/hospital_logo/logo14.png"
+      import logo15 from "../assets/hospital_logo/logo15.png"
+      import logo16 from "../assets/hospital_logo/logo16.png"
+      import logo17 from "../assets/hospital_logo/logo17.png"
+      import logo18 from "../assets/hospital_logo/logo18.png"
+      import logo19 from "../assets/hospital_logo/logo19.png"
+      import maleImg from "../assets/doctor_image/Male.png"
+      import femaleImg from "../assets/doctor_image/female.png"
+      
+      export const diseaseCount = [
+          {
+              id: 1,
+              name: "Bulging Eyes",
+              count: 50,
+              system: "K"
+          },
+          {
+              id: 2,
+              name: "Crossed Eyes",
+              count: 10,
+              system: "L"
+          },
+          {
+              id: 3,
+              name: "Parkinson",
+              count: 5,
+              system: "L"
+          },
+          {
+              id: 4,
+              name: "Uveitis",
+              count: 5,
+              system: "L"
+          },
+          {
+              id: 5,
+              name: "Glaucoma",
+              count: 110,
+              system: "L"
+          },
+          {
+              id: 6,
+              name: "Cataracts",
+              count: 600,
+              system: "L"
+          }
+      ]
+      
+      export const diseaseDescription = [
+          {
+              name: "Bulging_eyes",
+              description: "Bulging eyes, also known as exophthalmos or proptosis, is a condition where the eyeball protrudes from the eye socket. This can be caused by various factors, including thyroid disease, tumors, or inflammation. Symptoms may include discomfort, vision changes, and difficulty closing the eyelids."
+          },
+          {
+              name: "Crossed_Eyes",
+              description: "Crossed eyes, or strabismus, is a condition where the eyes do not properly align with each other. This can lead to double vision or difficulty focusing. Treatment options include glasses, eye patches, or surgery."
+          },
+          {
+              name: "Parkinson",
+              description: "Parkinson's disease is a progressive neurological disorder that affects movement. Symptoms include tremors, stiffness, and difficulty with balance and coordination. Treatment may involve medications, physical therapy, and lifestyle changes."
+          },
+          {
+              name: "Uveitis",
+              description: "Uveitis is an inflammation of the uvea, the middle layer of the eye. It can cause redness, pain, light sensitivity, and vision changes. Treatment typically involves corticosteroids and other anti-inflammatory medications."
+          },
+          {
+              name: "Glaucoma",
+              description: "Glaucoma is a group of eye conditions that damage the optic nerve, often due to high intraocular pressure. It can lead to vision loss if not treated. Regular eye exams and medications are essential for managing glaucoma."
+          },
+          {
+              name: "Cataracts",
+              description: "Cataracts are a clouding of the eye's natural lens, leading to blurred vision and difficulty seeing at night. They are common with aging and can be treated with surgery to replace the cloudy lens with an artificial one."
+          },
+          {
+              name: "Normal_eyes",
+              description: "Normal eyes refer to healthy eyes without any visible signs of disease or abnormalities. Regular eye check-ups are important to maintain eye health and prevent potential issues."
+          }
+      ]
+      
+      export const hospitalData = [
+          {
+              hospital_id: 1,
+              hospital_logo: logo1,
+              hospital_name: "Sankara Nethralaya Hospital",
+              hospital_phoneno: "+91-4442271500",
+              hospital_link: "https://www.sankaranethralaya.org/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Abinaya Valliappan",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Pediatric Ophthalmology and Strabismus"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. Jyotirmay Biswas",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Ocular inflammation, uveitis research"
+                  },
+                  {
+                      doctor_id: 3,
+                      doctor_name: "Dr. Sudha K Ganesh",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Ocular inflammation, cataract surgery"
+                  },
+                  {
+                      doctor_id: 4,
+                      doctor_name: "Dr. Suchitra Pradeep",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Uveitis and Cataract Services"
+                  },
+                  {
+                      doctor_id: 5,
+                      doctor_name: "Dr. Sharanya Sarah Abraham",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Uveitis"
+                  },
+                  {
+                      doctor_id: 6,
+                      doctor_name: "Dr. Ronnie George",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Glaucoma diagnosis and management"
+                  },
+                  {
+                      doctor_id: 7,
+                      doctor_name: "Dr. Lingam Vijaya",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Glaucoma and cataract"
+                  },
+                  {
+                      doctor_id: 8,
+                      doctor_name: "Dr. Shantha B",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Pediatric glaucoma"
+                  },
+                  {
+                      doctor_id: 9,
+                      doctor_name: "Dr. Divya Shetty",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Glaucoma"
+                  },
+                  {
+                      doctor_id: 10,
+                      doctor_name: "Dr. Parivadhini A",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Glaucoma"
+                  },
+              ]
+          },
+          {
+              hospital_id: 2,
+              hospital_logo: logo2,
+              hospital_name: "Apollo Hospital",
+              hospital_phoneno: "+91-4428290956",
+              hospital_link: "https://www.apollohospitals.com/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Pratik Ranjan Sen",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Ophthalmology"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. Rajesh Gupta",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Ophthalmology"
+                  },
+                  {
+                      doctor_id: 3,
+                      doctor_name: "Dr. Uma Ramesh",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Pediatric Ophthalmology"
+                  },
+                  {
+                      doctor_id: 4,
+                      doctor_name: "Dr. Pratik Ranjan Sen",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Ophthalmology"
+                  },
+                  {
+                      doctor_id: 5,
+                      doctor_name: "Dr. P. Vijayashankar",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Neurology"
+                  },
+                  {
+                      doctor_id: 6,
+                      doctor_name: "Dr. Geetha Lakshmipathy",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Neurology"
+                  },
+                  {
+                      doctor_id: 7,
+                      doctor_name: "Dr. Aparna Bhatnagar",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Ophthalmology"
+                  },
+                  {
+                      doctor_id: 8,
+                      doctor_name: " Dr. Atheeswar Das",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Ophthalmology"
+                  },
+                  {
+                      doctor_id: 9,
+                      doctor_name: "Dr. Meenakshi Pande",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Ophthalmology"
+                  },
+                  {
+                      doctor_id: 10,
+                      doctor_name: "Dr. Mary Abraham",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Ophthalmology"
+                  }
+              ]
+          },
+          {
+              hospital_id: 3,
+              hospital_logo: logo3,
+              hospital_name: "Aravind Eye Hospital",
+              hospital_phoneno: "+91-4524356100",
+              hospital_link: "https://aravind.org/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. P. Vijayalakshmi",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Pediatric Ophthalmology"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. R. Ramakrishnan",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Retina and Vitreous"
+                  }
+              ]
+          },
+          {
+              hospital_id: 4,
+              hospital_logo: logo4,
+              hospital_name: "Vasan Eye Care",
+              hospital_phoneno: "18005712222",
+              hospital_link: "https://vasaneye.com/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Janani M",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Pediatric Ophthalmology & Strabismus"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. Uma Maheshwari S",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Medical Retina & Uvea"
+                  },
+                  {
+                      doctor_id: 3,
+                      doctor_name: "Dr. R. Dhivya",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Glaucoma & General Ophthalmology"
+                  },
+                  {
+                      doctor_id: 4,
+                      doctor_name: "Dr. Preethi G",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Glaucoma & Cataract Surgery"
+                  },
+                  {
+                      doctor_id: 5,
+                      doctor_name: "Dr. Kaushik",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Cataract Surgery"
+                  },
+                  {
+                      doctor_id: 6,
+                      doctor_name: "Dr. Pavan Kumar MG",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Cataract & Glaucoma Surgery"
+                  }
+              ]
+          },
+          {
+              hospital_id: 5,
+              hospital_logo: logo5,
+              hospital_name: "Kumaran Eye Care",
+              hospital_phoneno: "044-24839557",
+              hospital_link: "https://kumaraneyecare.in/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. M. Kumaran",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Orbit and Oculoplasty, Cataract, Glaucoma, Medical Retina"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. P. Kumaravel",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Neuro-Ophthalmology"
+                  },
+                  {
+                      doctor_id: 3,
+                      doctor_name: "Dr. Balasubramanian",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Medical Retina, Uveitis"
+                  }
+              ]
+          },
+          {
+              hospital_id: 6,
+              hospital_logo: logo6,
+              hospital_name: "Gleneagles Health City",
+              hospital_phoneno: "044-44777000",
+              hospital_link: "https://www.gleneagleshospitals.co.in/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Ravindra Mohan E",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Oculoplasty, Orbit, and Trauma Services"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. Gitanjali Fernandez",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Pediatric Ophthalmology and Strabismus"
+                  },
+                  {
+                      doctor_id: 3,
+                      doctor_name: "Dr. Ravindra Mohan E",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Neuro-Ophthalmology"
+                  }
+              ]
+          },
+          {
+              hospital_id: 7,
+              hospital_logo: logo7,
+              hospital_name: "Apollo Spectra Hospital",
+              hospital_phoneno: "1-860-500-2244",
+              hospital_link: "https://www.apollospectra.com/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Ashok Rangarajan",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Oculoplasty and Orbit Disorders"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. V.C. Parthasarathy",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Pediatric Ophthalmology and Squint Surgery"
+                  },
+                  {
+                      doctor_id: 3,
+                      doctor_name: "Dr. Meenakshi Pande",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Neuro-Ophthalmology"
+                  },
+                  {
+                      doctor_id: 4,
+                      doctor_name: "Dr. Sapna K Mardi",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Medical Retina and Uveitis"
+                  },
+                  {
+                      doctor_id: 5,
+                      doctor_name: "Dr. Manoj Subhash Khatri",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Glaucoma Management"
+                  },
+                  {
+                      doctor_id: 6,
+                      doctor_name: "Dr. Sridhar Baratan",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Cataract Surgery"
+                  },
+                  {
+                      doctor_id: 7,
+                      doctor_name: "Dr. Pratik Ranjan Sen",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Cataract and Refractive Surgery"
+                  }
+              ]
+          },
+          {
+              hospital_id: 8,
+              hospital_logo: logo8,
+              hospital_name: "RK Eye Centre",
+              hospital_phoneno: "+91-8939941585",
+              hospital_link: "https://rkeyecentre.com/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Rajini Kantha Narendranath",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Oculoplasty and Orbit Disorders"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: " Dr. Naveen Narendranath",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Pediatric Ophthalmology and Strabismus"
+                  }
+              ]
+          },
+          {
+              hospital_id: 9,
+              hospital_logo: logo9,
+              hospital_name: "Udhi Eye Hospital",
+              hospital_phoneno: "044-43471111",
+              hospital_link: "https://www.udhieyehospitals.com/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Allen S. Raveendran",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Oculoplasty and Orbit Disorders"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. Anbarasi",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Pediatric Ophthalmology and Strabismus"
+                  },
+                  {
+                      doctor_id: 3,
+                      doctor_name: "Dr. R. Raveendran",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Neuro-Ophthalmology"
+                  },
+                  {
+                      doctor_id: 4,
+                      doctor_name: "Dr. Sherren Raveendran",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Uveitis and Retinal Disorders"
+                  }
+              ]
+          },
+          {
+              hospital_id: 10,
+              hospital_logo: logo10,
+              hospital_name: "Dr. Agarwal’s Eye Hospital",
+              hospital_phoneno: "+91-9594904015",
+              hospital_link: "https://www.dragarwal.com/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Kaladevi Sathish",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Orbit, Oculoplasty, Facial Aesthetic & Ophthalmic Plastic Surgery"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. Balasubramaniam S",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Orbit, Oculoplasty, Ocular Oncology, Therapeutic Oculoplasty"
+                  },
+                  {
+                      doctor_id: 3,
+                      doctor_name: "Dr. Manjula Jayakumar",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Neuro Ophthalmology, Paediatric Ophthalmology"
+                  },
+                  {
+                      doctor_id: 4,
+                      doctor_name: "Dr. Akshya",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Squint, General Ophthalmology, Paediatric Ophthalmology"
+                  },
+                  {
+                      doctor_id: 5,
+                      doctor_name: "Dr. Preetha Rajasekaran",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Glaucoma, Cataract, General Ophthalmology, Neuro Ophthalmology, Paediatric Ophthalmology"
+                  },
+                  {
+                      doctor_id: 6,
+                      doctor_name: "Dr. Dhivya Ashok Kumar",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Uvea, Oculoplasty, Ocular Oncology"
+                  },
+                  {
+                      doctor_id: 7,
+                      doctor_name: "Dr. Karpagam D",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Cataract, Uveitis, General Ophthalmology"
+                  },
+                  {
+                      doctor_id: 8,
+                      doctor_name: "Prof. Amar Agarwal",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Cataract, Glaucoma, Cornea, Retina, General Ophthalmology"
+                  },
+                  {
+                      doctor_id: 9,
+                      doctor_name: "Dr. K. S. Ramakrishnan",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Cataract, Glaucoma, General Ophthalmology"
+                  },
+                  {
+                      doctor_id: 10,
+                      doctor_name: "Dr. Murali Ariga",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Glaucoma, General Ophthalmology"
+                  }
+              ]
+          },
+          {
+              hospital_id: 11,
+              hospital_logo: logo11,
+              hospital_name: "Rainbow Children’s Hospital",
+              hospital_phoneno: "+91-8062261290",
+              hospital_link: "https://www.rainbowhospitals.in/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Sumana Manohar",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Pediatric ENT and Airway Disorders"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. Meenakshi Sundaram",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Pediatric Neurology"
+                  },
+              ]
+          },
+          {
+              hospital_id: 12,
+              hospital_logo: logo12,
+              hospital_name: "Fortis Malar Hospital",
+              hospital_phoneno: "+91-9205010100",
+              hospital_link: "https://www.fortismalarhospital.com/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Radhi Malar Anand",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Comprehensive Ophthalmology with a focus on Pediatric Ophthalmology"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. Rajiv Lochan",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Liver Transplant and HPB Surgery"
+                  },
+                  {
+                      doctor_id: 3,
+                      doctor_name: "Dr. R. Karthik",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Urology & Renal Transplant"
+                  }
+              ]
+          },
+          {
+              hospital_id: 13,
+              hospital_logo: logo13,
+              hospital_name: "Iswarya Hospital",
+              hospital_phoneno: "044-20252025",
+              hospital_link: "https://iswarya.com/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Aishwarya T",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Ophthalmology"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. S. Suresh",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Ophthalmology"
+                  }
+              ]
+          },
+          {
+              hospital_id: 14,
+              hospital_logo: logo14,
+              hospital_name: "Pristyn Care",
+              hospital_phoneno: "+91-7303763223",
+              hospital_link: "https://www.pristyncare.com/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Prerana Tripathi",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Ophthalmology"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. Sushama Suram",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Ophthalmology"
+                  }
+              ]
+          },
+          {
+              hospital_id: 15,
+              hospital_logo: logo15,
+              hospital_name: "MGM Healthcare",
+              hospital_phoneno: "+91-4442004200",
+              hospital_link: "https://mgmmalar.in/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Radhi Malar Anand",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Comprehensive Ophthalmology with a focus on Pediatric Ophthalmology"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. Anupam Sahu",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Crossed eyes and Strabismus"
+                  },
+                  {
+                      doctor_id: 3,
+                      doctor_name: "Dr. Nagarajan V",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Neurology with a focus on movement disorders"
+                  },
+                  {
+                      doctor_id: 4,
+                      doctor_name: "Dr. Mihir Mishra",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Uveitis and Ocular Oncology"
+                  },
+                  {
+                      doctor_id: 5,
+                      doctor_name: "Dr. Debasish Dash",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Diagnosis and management of glaucoma"
+                  },
+                  {
+                      doctor_id: 6,
+                      doctor_name: "Dr. Suhasini",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Cataract surgery and comprehensive eye care"
+                  }
+              ]
+          },
+          {
+              hospital_id: 16,
+              hospital_logo: logo16,
+              hospital_name: "Sri Ramachandra Medical Centre",
+              hospital_phoneno: "044-45928692",
+              hospital_link: "https://www.sriramachandramedicalcentre.com/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Radha Annamalai",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Oculoplasty and orbital surgery"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. Suhas Prabhakar",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Strabismus and pediatric ophthalmology"
+                  },
+                  {
+                      doctor_id: 3,
+                      doctor_name: "Dr. Stephen Sudhakar K",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Neuro-ophthalmology"
+                  },
+                  {
+                      doctor_id: 4,
+                      doctor_name: "Dr. M. Meera Alias Devasena",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Uveitis and ocular immunology"
+                  },
+                  {
+                      doctor_id: 5,
+                      doctor_name: "Dr. M. Muthayya",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Glaucoma"
+                  },
+                  {
+                      doctor_id: 6,
+                      doctor_name: "Dr. C. Arvind Babu",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Cataract and refractive surgery"
+                  }
+              ]
+          },
+          {
+              hospital_id: 17,
+              hospital_logo: logo17,
+              hospital_name: "Medway Hospital",
+              hospital_phoneno: "+91-8377805564",
+              hospital_link: "https://medwayhospitals.com/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Salim J. Thomas",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Oculoplasty and orbital surgery"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. K. Jothinathan",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Strabismus and pediatric ophthalmology"
+                  },
+                  {
+                      doctor_id: 3,
+                      doctor_name: "Dr. D. Divakar",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Neuro-ophthalmology"
+                  },
+                  {
+                      doctor_id: 4,
+                      doctor_name: "Dr. C. M. Thiagarajan",
+                      doctor_image: maleImg,
+                      doctor_speciality: "Uveitis and ocular immunology"
+                  }
+              ]
+          },
+          {
+              hospital_id: 18,
+              hospital_logo: logo18,
+              hospital_name: "SIMS Hospital",
+              hospital_phoneno: "+91-4420002001",
+              hospital_link: "https://simshospitals.com/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Aparna Bhatnagar",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Oculoplasty and orbital surgery"
+                  },
+                  {
+                      doctor_id: 2,
+                      doctor_name: "Dr. Kalpana R",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Strabismus and pediatric ophthalmology"
+                  },
+                  {
+                      doctor_id: 3,
+                      doctor_name: "Dr. Prativa Misra",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "Medical retina and uveitis"
+                  }
+              ]
+          },
+          {
+              hospital_id: 19,
+              hospital_logo: logo19,
+              hospital_name: "Deepa Hospital",
+              hospital_phoneno: "+91-9069336933",
+              hospital_link: "https://deepahospital.in/",
+              doctors: [
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. Sudha Bhuvaneshwari",
+                      doctor_image: femaleImg,
+                      doctor_speciality: "General ophthalmology with experience in orbital and oculoplastic conditions"
+                  },
+                  {
+                      doctor_id: 1,
+                      doctor_name: "Dr. R. Venkatesh",
+                      doctor_image: maleImg,
+                      doctor_speciality: "General ophthalmology with experience in orbital and oculoplastic conditions"
+                  }
+              ]
+          },
+      ]
+      
+      export const techStack = [
+          {
+              id: 1,
+              name: "React.js"
+          },
+          {
+              id: 2,
+              name: "Tailwind CSS"
+          },
+          {
+              id: 3,
+              name: "CNN"
+          },
+          {
+              id: 4,
+              name: "Python"
+          },
+          {
+              id: 5,
+              name: "Tensorflow"
+          },
+          {
+              id: 6,
+              name: "Roboflow"
+          },
+          {
+              id: 7,
+              name: "OpenCV"
+          }, 
+          {
+              id: 8,
+              name: "Flask"
+          },
+          {
+              id: 9,
+              name: "Raspberry Pi"
+          }
+      ]
+      ---
+
+📄 vite.config.js
+  ---
+  import { defineConfig } from 'vite'
+  import react from '@vitejs/plugin-react'
+  import tailwindcss from '@tailwindcss/vite'
+  
+  // https://vite.dev/config/
+  export default defineConfig({
+    plugins: [react(), tailwindcss()],
+  })
+  
+  ---
+
+
+# Snapshot Summary
+Total files processed: 60
